@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Portafolio personal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este Portafolio se puede visualizar en  [netlify](https://keen-pare-b0ab2d.netlify.app/).
 
 ## Available Scripts
 
