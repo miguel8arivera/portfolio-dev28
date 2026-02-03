@@ -8,7 +8,15 @@
       "Bash(npm run build:*)",
       "Bash(git mv:*)",
       "Bash(find:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(git commit:*)",
+      "Bash(npm test:*)",
+      "Bash(if [ -f .eslintrc.json ])",
+      "Bash(then cat .eslintrc.json)",
+      "Bash(elif [ -f .eslintrc.js ])",
+      "Bash(then cat .eslintrc.js)",
+      "Bash(else echo \"No ESLint config found\")",
+      "Bash(fi)"
     ]
   }
 }

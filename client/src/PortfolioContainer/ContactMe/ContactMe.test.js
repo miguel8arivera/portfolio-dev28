@@ -12,11 +12,25 @@ jest.mock('react-toastify', () => ({
     success: jest.fn(),
   },
 }));
-jest.mock('../../utilities/ScrollService');
-jest.mock('../../utilities/Animations');
+
+jest.mock('../../utilities/ScrollService', () => ({
+  currentScreenFadeIn: {
+    subscribe: jest.fn(() => ({ unsubscribe: jest.fn() })),
+  },
+}));
+
+jest.mock('../../utilities/Animations', () => ({
+  animations: {
+    fadeInScreen: jest.fn(),
+  },
+}));
 
 describe('ContactMe Component', () => {
   beforeEach(() => {
+    const ScrollService = require('../../utilities/ScrollService');
+    ScrollService.currentScreenFadeIn.subscribe.mockImplementation(() => ({
+      unsubscribe: jest.fn(),
+    }));
     jest.clearAllMocks();
   });
 
@@ -108,7 +122,9 @@ describe('ContactMe Component', () => {
 
     fireEvent.change(nameInput, { target: { value: 'John Doe' } });
     fireEvent.change(emailInput, { target: { value: 'john@example.com' } });
-    fireEvent.change(messageInput, { target: { value: 'Hello, this is a test message!' } });
+    fireEvent.change(messageInput, {
+      target: { value: 'Hello, this is a test message!' },
+    });
     fireEvent.click(submitButton);
 
     await waitFor(() => {
@@ -120,7 +136,9 @@ describe('ContactMe Component', () => {
     });
 
     await waitFor(() => {
-      expect(toast.success).toHaveBeenCalledWith('Thank you for contacting Miguel!');
+      expect(toast.success).toHaveBeenCalledWith(
+        'Thank you for contacting Miguel!',
+      );
     });
 
     // Check that form fields are cleared
@@ -130,6 +148,11 @@ describe('ContactMe Component', () => {
   });
 
   test('handles API error gracefully', async () => {
+    // Mock console.error to avoid noise in test output
+    const consoleErrorSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+
     axios.post.mockRejectedValue(new Error('Network error'));
 
     render(<ContactMe id="contact" />);
@@ -145,8 +168,19 @@ describe('ContactMe Component', () => {
     fireEvent.click(submitButton);
 
     await waitFor(() => {
-      expect(toast.error).toHaveBeenCalledWith('Failed to send message. Please try again.');
+      expect(toast.error).toHaveBeenCalledWith(
+        'Failed to send message. Please try again.',
+      );
     });
+
+    // Verify console.error was called (but output is suppressed)
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      'Error sending message:',
+      expect.any(Error),
+    );
+
+    // Restore console.error
+    consoleErrorSpy.mockRestore();
   });
 
   test('trims whitespace from inputs during validation', async () => {
