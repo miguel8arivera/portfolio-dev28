@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Animations from "../../utilities/Animations";
 import ScreenHeading from "../../utilities/ScreenHeading/ScreenHeading";
 import ScrollService from "../../utilities/ScrollService";
@@ -13,8 +13,16 @@ const Resume = (props) => {
 
     Animations.animations.fadeInScreen(props.id);
   };
-  const fadeInSubscription =
-    ScrollService.currentScreenFadeIn.subscribe(fadeInScreenHandler);
+
+  useEffect(() => {
+    const fadeInSubscription =
+      ScrollService.currentScreenFadeIn.subscribe(fadeInScreenHandler);
+
+    return () => {
+      fadeInSubscription.unsubscribe();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const ResumeHeading = (props) => {
     return (

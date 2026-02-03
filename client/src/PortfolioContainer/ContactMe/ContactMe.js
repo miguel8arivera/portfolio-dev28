@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import Typical from "react-typical";
+import React, { useState, useEffect } from "react";
+import { TypeAnimation } from "react-type-animation";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -15,8 +15,16 @@ export default function Contactme(props) {
     if (screen.fadeInScreen !== props.id) return;
     Animations.animations.fadeInScreen(props.id);
   };
-  const fadeInSubscription =
-    ScrollService.currentScreenFadeIn.subscribe(fadeInScreenHandler);
+
+  useEffect(() => {
+    const fadeInSubscription =
+      ScrollService.currentScreenFadeIn.subscribe(fadeInScreenHandler);
+
+    return () => {
+      fadeInSubscription.unsubscribe();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -33,9 +41,17 @@ export default function Contactme(props) {
   const handleMessage = (e) => {
     setMessage(e.target.value);
   };
-  console.log(name);
+
   const submitForm = async (e) => {
     e.preventDefault();
+
+    // Validate fields BEFORE sending
+    if (!name.trim() || !email.trim() || !message.trim()) {
+      setBanner("Please fill all the fields");
+      toast.error("Please fill all the fields");
+      return;
+    }
+
     try {
       let data = {
         name,
@@ -44,21 +60,23 @@ export default function Contactme(props) {
       };
       setBool(true);
       const res = await axios.post("/contact", data);
-      if (name.length === 0 || email.length === 0 || message.length === 0) {
-        setBanner(res.data.msg);
-        toast.error(res.data.msg);
-        setBool(false);
-      } else if (res.status === 200) {
+
+      if (res.status === 200) {
         setBanner(res.data.msg);
         toast.success(res.data.msg);
-        setBool(false);
 
+        // Clear form after successful submission
         setName("");
         setEmail("");
         setMessage("");
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error sending message:", error);
+      setBanner("There was an error sending your message. Please try again.");
+      toast.error("Failed to send message. Please try again.");
+    } finally {
+      // Always reset loading state
+      setBool(false);
     }
   };
 
@@ -68,9 +86,11 @@ export default function Contactme(props) {
       <div className="central-form">
         <div className="col">
           <h2 className="title">
-            <Typical
-              loop={Infinity}
-              steps={["Have a discussion..", 1500, "Share experience", 1500]}
+            <TypeAnimation
+              sequence={["Have a discussion..", 1500, "Share experience", 1500]}
+              wrapper="span"
+              speed={50}
+              repeat={Infinity}
             />
           </h2>
         </div>

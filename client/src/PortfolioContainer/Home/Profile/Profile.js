@@ -1,5 +1,5 @@
 import React from "react";
-import Typical from "react-typical";
+import { TypeAnimation } from "react-type-animation";
 import ScrollService from "../../../utilities/ScrollService";
 import "./Profile.css";
 
@@ -38,9 +38,8 @@ export default function Profile() {
               {" "}
               <h1>
                 {" "}
-                <Typical
-                  loop={Infinity}
-                  steps={[
+                <TypeAnimation
+                  sequence={[
                     "Ethusiastic Dev ❤️",
                     1200,
                     "Full Stack Developer 👨‍💻 ",
@@ -52,6 +51,9 @@ export default function Profile() {
                     "Cross Platform Dev 🔵",
                     1200,
                   ]}
+                  wrapper="span"
+                  speed={50}
+                  repeat={Infinity}
                 />
               </h1>
               <span className="profile-role-tagline">

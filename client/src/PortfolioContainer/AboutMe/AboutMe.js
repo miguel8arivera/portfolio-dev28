@@ -9,8 +9,16 @@ export default function AboutMe(props) {
     if (screen.fadeInScreen !== props.id) return;
     Animations.animations.fadeInScreen(props.id);
   };
-  const fadeInSubscription =
-    ScrollService.currentScreenFadeIn.subscribe(fadeInScreenHandler);
+
+  useEffect(() => {
+    const fadeInSubscription =
+      ScrollService.currentScreenFadeIn.subscribe(fadeInScreenHandler);
+
+    return () => {
+      fadeInSubscription.unsubscribe();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const SCREEN_CONSTSANTS = {
     description:

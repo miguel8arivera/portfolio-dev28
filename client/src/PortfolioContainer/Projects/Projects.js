@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
@@ -14,8 +14,15 @@ export default function Projects(props) {
     Animations.animations.fadeInScreen(props.id);
   };
 
-  const fadeInSubscription =
-    ScrollService.currentScreenFadeIn.subscribe(fadeInScreenHandler);
+  useEffect(() => {
+    const fadeInSubscription =
+      ScrollService.currentScreenFadeIn.subscribe(fadeInScreenHandler);
+
+    return () => {
+      fadeInSubscription.unsubscribe();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const options = {
     loop: true,
