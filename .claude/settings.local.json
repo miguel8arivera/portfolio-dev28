@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfix: Remove hardcoded credentials and implement environment variables\n\nSecurity improvements:\n- Remove exposed Gmail credentials from contactRoute.js\n- Implement environment variables for email configuration\n- Update .gitignore to protect .env files\n- Remove .env from git tracking\n- Add .env.example as configuration template\n- Create SECURITY-SETUP.md with setup instructions\n\nBreaking: Requires manual .env configuration before running server\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(npm install)",
+      "Bash(npm audit fix:*)",
+      "Bash(npm run build:*)",
+      "Bash(git mv:*)",
+      "Bash(find:*)",
+      "Bash(npm install:*)"
+    ]
+  }
+}

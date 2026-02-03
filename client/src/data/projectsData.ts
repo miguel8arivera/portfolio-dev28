@@ -3,7 +3,9 @@
  * Contains portfolio projects information
  */
 
-export const projectsData = [
+import type { ProjectData } from '../types/projectsTypes';
+
+export const projectsData: ProjectData[] = [
   {
     id: 1,
     title: "E-commerce-app",

@@ -3,7 +3,9 @@
  * Reusable carousel settings for project galleries
  */
 
-export const carouselOptions = {
+import type { CarouselOptions } from '../types/carouselTypes';
+
+export const carouselOptions: CarouselOptions = {
   loop: true,
   margin: 0,
   nav: true,

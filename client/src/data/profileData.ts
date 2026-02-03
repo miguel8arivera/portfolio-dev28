@@ -3,7 +3,13 @@
  * Contains social media links, role animations, and tagline
  */
 
-export const socialMediaLinks = [
+import type {
+  SocialMediaLink,
+  ProfileInfo,
+  RoleAnimationSequence,
+} from '../types/profileTypes';
+
+export const socialMediaLinks: SocialMediaLink[] = [
   {
     id: 1,
     platform: "LinkedIn",
@@ -36,7 +42,7 @@ export const socialMediaLinks = [
   },
 ];
 
-export const roleAnimationSequence = [
+export const roleAnimationSequence: RoleAnimationSequence = [
   "Enthusiastic Dev ❤️",
   1200,
   "Full Stack Developer 👨‍💻",
@@ -49,7 +55,7 @@ export const roleAnimationSequence = [
   1200,
 ];
 
-export const profileInfo = {
+export const profileInfo: ProfileInfo = {
   name: "Miguel",
   tagline:
     "I am passionate about Front-End development, with a strong focus on the MERN stack.",

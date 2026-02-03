@@ -15,7 +15,7 @@ import "./Resume.css";
 
 const Resume = (props) => {
   const [selectedBulletIndex, setSelectedBulletIndex] = useState(0);
-  const [carousalOffsetStyle, setCarousalOffsetStyle] = useState({});
+  const [carousalOffsetStyle, setCarousalOffsetStyle] = useState<any>({});
 
   let fadeInScreenHandler = (screen) => {
     if (screen.fadeInScreen !== props.id) return;

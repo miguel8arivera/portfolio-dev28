@@ -3,7 +3,9 @@
  * Contains personal description and highlights
  */
 
-export const aboutMeContent = {
+import type { AboutMeContent } from '../types/aboutMeTypes';
+
+export const aboutMeContent: AboutMeContent = {
   description:
     "I am a self-taught professional with a great passion for technology and learn something new every day and help implement technology to your ideas.",
   highlights: {

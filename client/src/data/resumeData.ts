@@ -3,7 +3,16 @@
  * Contains all resume section data including skills, education, work history, and projects
  */
 
-export const resumeBullets = [
+import type {
+  ResumeBullet,
+  Skill,
+  Project,
+  Education,
+  WorkExperience,
+  Interest,
+} from '../types/resumeTypes';
+
+export const resumeBullets: ResumeBullet[] = [
   { label: "Education", logoSrc: "education.svg" },
   { label: "Work History", logoSrc: "work-history.svg" },
   { label: "Programming Skills", logoSrc: "programming-skills.svg" },
@@ -12,7 +21,7 @@ export const resumeBullets = [
   { label: "Interests", logoSrc: "interests.svg" },
 ];
 
-export const programmingSkillsDetails = [
+export const programmingSkillsDetails: Skill[] = [
   { skill: "JavaScript", ratingPercentage: 85 },
   { skill: "React", ratingPercentage: 65 },
   { skill: "Redux", ratingPercentage: 75 },
@@ -28,11 +37,11 @@ export const programmingSkillsDetails = [
   { skill: "HTML", ratingPercentage: 60 },
 ];
 
-export const applicationSkillsDetails = [
+export const applicationSkillsDetails: Skill[] = [
   { skill: "E-commerce", ratingPercentage: 80 },
 ];
 
-export const projectsDetails = [
+export const projectsDetails: Project[] = [
   {
     title: "Budget-app",
     duration: { fromDate: "2021", toDate: "June 2022" },
@@ -58,7 +67,7 @@ export const projectsDetails = [
   },
 ];
 
-export const education = [
+export const education: Education[] = [
   {
     heading: "University Jorge Basadre Grohmann, Peru",
     subHeading: "",
@@ -73,7 +82,7 @@ export const education = [
   },
 ];
 
-export const workExperience = {
+export const workExperience: WorkExperience = {
   heading: "Realized projects in React and Nodejs",
   subHeading: "Full-Stack Dev",
   fromDate: "2020",
@@ -85,7 +94,7 @@ export const workExperience = {
   ],
 };
 
-export const interests = [
+export const interests: Interest[] = [
   {
     heading: "Sports",
     description: "Like to football, and to run.",
