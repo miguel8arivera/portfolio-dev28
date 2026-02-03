@@ -8,6 +8,7 @@ import load1 from "../../../src/images/load2.gif";
 import ScreenHeading from "../../utilities/ScreenHeading/ScreenHeading";
 import ScrollService from "../../utilities/ScrollService";
 import Animations from "../../utilities/Animations";
+import { contactAnimationSequence, contactDescription } from "../../data/contactMeData";
 import "./ContactMe.css";
 
 export default function Contactme(props) {
@@ -87,7 +88,7 @@ export default function Contactme(props) {
         <div className="col">
           <h2 className="title">
             <TypeAnimation
-              sequence={["Have a discussion..", 1500, "Share experience", 1500]}
+              sequence={contactAnimationSequence}
               wrapper="span"
               speed={50}
               repeat={Infinity}
@@ -97,14 +98,9 @@ export default function Contactme(props) {
         <div className="back-form">
           <div className="img-back">
             <h4>
-              As a Front-end Development professional that I am, I would love
-              for you to contact me to follow your requirements for your idea. I
-              have had the opportunity to make and learn several tools and you
-              have a very creative and innovative approach to the subject. It
-              would be great if we could discuss them. Thanks in advance.
-              Miguel..
+              {contactDescription}
               <p></p>
-              <img src={imgBack} alt="image is missing" />
+              <img src={imgBack} alt="Contact background illustration" />
             </h4>
           </div>
           <form onSubmit={submitForm}>
@@ -124,7 +120,7 @@ export default function Contactme(props) {
                 <i className="fa fa-paper-plane" />
                 {bool ? (
                   <b className="load">
-                    <img src={load1} alt="image not responding" />
+                    <img src={load1} alt="Loading spinner" />
                   </b>
                 ) : (
                   ""

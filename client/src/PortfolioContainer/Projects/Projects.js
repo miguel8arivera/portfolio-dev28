@@ -6,6 +6,8 @@ import "owl.carousel/dist/assets/owl.theme.default.css";
 import ScreenHeading from "../../utilities/ScreenHeading/ScreenHeading";
 import ScrollService from "../../utilities/ScrollService";
 import Animations from "../../utilities/Animations";
+import { projectsData } from "../../data/projectsData";
+import { carouselOptions } from "../../config/carouselConfig";
 import "./Projects.css";
 
 export default function Projects(props) {
@@ -24,28 +26,6 @@ export default function Projects(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const options = {
-    loop: true,
-    margin: 0,
-    nav: true,
-    animateIn: "bounceInRight",
-    animateOut: "bounceOutRight",
-    dots: true,
-    autoplay: true,
-    smartSpeed: 1000,
-    responsive: {
-      0: {
-        items: 1,
-      },
-      768: {
-        items: 1,
-      },
-      1000: {
-        items: 3,
-      },
-    },
-  };
-
   return (
     <div>
       <ScreenHeading
@@ -58,55 +38,25 @@ export default function Projects(props) {
             <OwlCarousel
               className="owl-carousel"
               id="project-carousel"
-              {...options}
+              {...carouselOptions}
             >
-              <div className="col-lg-12">
-                <div className="project-item">
-                  <div className="project-desc">
-                    <p>
-                      <i className="fa fa-quote-left" />
-                      Construction of an E-commerce which provides an approach
-                      to current business, connected to a database and business
-                      logic.
-                      <i className="fa fa-quote-right" />
-                    </p>
-                  </div>
-                  <div className="project-info">
-                    <h5>E-comerce-app</h5>
-                    <p>React</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-lg-12">
-                <div className="project-item">
-                  <div className="project-comment">
-                    <p>
-                      <i className="fa fa-quote-left" />
-                      Creation of a web portfolio made with React, CSS,
-                      strengthening the comfort of the use of web technologies.
-                      <i className="fa fa-quote-right" />
-                    </p>
-                  </div>
-                  <div className="project-info">
-                    <h5>Portfolio-web</h5>
-                    <p>React</p>
+              {projectsData.map((project) => (
+                <div className="col-lg-12" key={project.id}>
+                  <div className="project-item">
+                    <div className="project-desc">
+                      <p>
+                        <i className="fa fa-quote-left" />
+                        {project.description}
+                        <i className="fa fa-quote-right" />
+                      </p>
+                    </div>
+                    <div className="project-info">
+                      <h5>{project.title}</h5>
+                      <p>{project.technology}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              <div className="col-lg-12">
-                <div className="project-item">
-                  <div className="project-comment">
-                    <p>
-                      <i className="fa fa-quote-left" />
-                      Creation of a web portfolio made with React, CSS,
-                      strengthening the comfort of the use of web technologies.
-                      <i className="fa fa-quote-right" />
-                    </p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </OwlCarousel>
           </div>
         </div>

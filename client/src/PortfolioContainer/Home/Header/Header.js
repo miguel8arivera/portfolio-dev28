@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   TOTAL_SCREENS,
   GET_SCREEN_INDEX,
@@ -6,6 +6,7 @@ import {
 import ScrollService from "../../../utilities/ScrollService";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { headerLogo } from "../../../data/headerData";
 import "./Header.css";
 
 export default function Header() {
@@ -18,8 +19,16 @@ export default function Header() {
     let screenIndex = GET_SCREEN_INDEX(currentScreen.screenInView);
     if (screenIndex < 0) return;
   };
-  let currentScreenSubscription =
-    ScrollService.currentScreenBroadcaster.subscribe(updateCurrentScreen);
+
+  useEffect(() => {
+    const currentScreenSubscription =
+      ScrollService.currentScreenBroadcaster.subscribe(updateCurrentScreen);
+
+    return () => {
+      currentScreenSubscription.unsubscribe();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getHeaderOptions = () => {
     return TOTAL_SCREENS.map((Screen, i) => (
@@ -65,8 +74,8 @@ export default function Header() {
             <FontAwesomeIcon className="header-hamburger-bars " icon={faBars} />
           </div>
           <div className="header-logo ">
-            <span className="first-title ">Mig-dev28 </span>
-            <span className="second-title ">💻</span>
+            <span className="first-title ">{headerLogo.text} </span>
+            <span className="second-title ">{headerLogo.emoji}</span>
           </div>
           <div
             className={

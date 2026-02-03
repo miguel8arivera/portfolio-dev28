@@ -2,6 +2,15 @@ import React, { useState, useEffect } from "react";
 import Animations from "../../utilities/Animations";
 import ScreenHeading from "../../utilities/ScreenHeading/ScreenHeading";
 import ScrollService from "../../utilities/ScrollService";
+import {
+  resumeBullets,
+  programmingSkillsDetails,
+  applicationSkillsDetails,
+  projectsDetails,
+  education,
+  workExperience,
+  interests,
+} from "../../data/resumeData";
 import "./Resume.css";
 
 const Resume = (props) => {
@@ -48,118 +57,37 @@ const Resume = (props) => {
     );
   };
 
-  const resumeBullets = [
-    { label: "Education", logoSrc: "education.svg" },
-    { label: "Work History", logoSrc: "work-history.svg" },
-    { label: "Programming Skills", logoSrc: "programming-skills.svg" },
-    { label: "Application Skills", logoSrc: "programming-skills.svg" },
-    { label: "Projects", logoSrc: "projects.svg" },
-    { label: "Interests", logoSrc: "interests.svg" },
-  ];
-
-  const programmingSkillsDetails = [
-    { skill: "JavaScript", ratingPercentage: 85 },
-    { skill: "React", ratingPercentage: 65 },
-    { skill: "Redux", ratingPercentage: 75 },
-    { skill: "Node JS", ratingPercentage: 65 },
-    { skill: "Git", ratingPercentage: 65 },
-    { skill: "GraphQql", ratingPercentage: 65 },
-    { skill: "TypeScript", ratingPercentage: 80 },
-    { skill: "Mongo Db", ratingPercentage: 75 },
-    { skill: "SQL Server", ratingPercentage: 90 },
-    { skill: "CSS", ratingPercentage: 65 },
-    { skill: "Sass", ratingPercentage: 65 },
-    { skill: "Tailwind", ratingPercentage: 75 },
-    { skill: "HTML", ratingPercentage: 60 },
-  ];
-
-  const applicationSkillsDetails = [
-    { skill: "E-comerce", ratingPercentage: 80 },
-    /* { skill: "", ratingPercentage: 85 },
-    { skill: "ArcGIS Platform", ratingPercentage: 85 },
-    { skill: "Grafana", ratingPercentage: 75 },
-    { skill: "Azure Cloud Server", ratingPercentage: 50 },
-    { skill: "E&P - Petrel", ratingPercentage: 70 },
-    { skill: "E&P - Kingdom", ratingPercentage: 85 },
-    { skill: "E&P - Hampson-Russell", ratingPercentage: 85 },
-    { skill: "E&P - Paradigm", ratingPercentage: 75 }, */
-  ];
-
-  const projectsDetails = [
-    {
-      title: "Budget-app",
-      duration: { fromDate: " 2021", toDate: "June 2022" },
-      description:
-        "An application to control the budget, which can be used in any business very intuitive.",
-      subHeading: "Technologies Used: React, Css, Html, Sass.",
-    },
-    {
-      title: "E-comerce",
-      duration: { fromDate: "2022", toDate: "present" },
-      description:
-        "An online store of products which is widely used and with a high demand from users.",
-      subHeading:
-        "Technologies Used:  React, Redux, Taildwin, Firebase, TypeScript, Node js.",
-    },
-    {
-      title: "Instagram-clone",
-      duration: { fromDate: "2022", toDate: "present" },
-      description:
-        "A clone with the same functionality of Instagram applying the different technologies for web development..",
-      subHeading:
-        "Technologies Used: Git, JavaScript, Node, GraphQL, React, Redux, Taildwin,TypeScript.",
-    },
-  ];
-
   const resumeDetails = [
+    /* EDUCATION */
     <div className="resume-screen-container" key="education">
-      <ResumeHeading
-        heading={"University Jorge Basadre Grohmann, Peru"}
-        subHeading={""}
-        fromDate={"2012"}
-        toDate={"2015"}
-      />
-
-      <ResumeHeading
-        heading={"freeCodeCamp, USA"}
-        subHeading={"Front-end Dev"}
-        fromDate={"2020"}
-        toDate={"2022"}
-      />
+      {education.map((edu, index) => (
+        <ResumeHeading
+          key={index}
+          heading={edu.heading}
+          subHeading={edu.subHeading}
+          fromDate={edu.fromDate}
+          toDate={edu.toDate}
+        />
+      ))}
     </div>,
 
     /* WORK EXPERIENCE */
     <div className="resume-screen-container" key="work-experience">
       <div className="experience-container">
         <ResumeHeading
-          heading={"Realized projects in React and Nodejs"}
-          subHeading={"Full-Stack Dev"}
-          fromDate={"2020"}
-          toDate={"Present"}
+          heading={workExperience.heading}
+          subHeading={workExperience.subHeading}
+          fromDate={workExperience.fromDate}
+          toDate={workExperience.toDate}
         />
-        <div className="experience-description">
-          <span className="resume-description-text">
-            Currently I make projects with the MERN stack, which is used in the
-            UI for a good user experience.
-          </span>
-        </div>
-        <div className="experience-description">
-          <span className="resume-description-text">
-            - Construction of an E-commerce which provides an approach to
-            current business, connected to a database and business logic.
-          </span>
-          <br />
-          <span className="resume-description-text">
-            - Creation of a web portfolio made with React, CSS, strengthening
-            the comfort of the use of web technologies.
-          </span>
-          <br />
-          <span className="resume-description-text">
-            {/*   - Developed ETL tools to digitize multi-document format into
-            semi-automated services and database. */}
-          </span>
-          <br />
-        </div>
+        {workExperience.descriptions.map((desc, index) => (
+          <div className="experience-description" key={index}>
+            <span className="resume-description-text">
+              {index === 0 ? desc : `- ${desc}`}
+            </span>
+            <br />
+          </div>
+        ))}
       </div>
     </div>,
 
@@ -203,32 +131,27 @@ const Resume = (props) => {
 
     /* PROJECTS */
     <div className="resume-screen-container" key="projects">
-      {projectsDetails.map((projectsDetails, index) => (
+      {projectsDetails.map((project, index) => (
         <ResumeHeading
           key={index}
-          heading={projectsDetails.title}
-          subHeading={projectsDetails.subHeading}
-          description={projectsDetails.description}
-          fromDate={projectsDetails.duration.fromDate}
-          toDate={projectsDetails.duration.toDate}
+          heading={project.title}
+          subHeading={project.subHeading}
+          description={project.description}
+          fromDate={project.duration.fromDate}
+          toDate={project.duration.toDate}
         />
       ))}
     </div>,
 
-    /* Interests */
+    /* INTERESTS */
     <div className="resume-screen-container" key="interests">
-      <ResumeHeading
-        heading="Sports"
-        description="Like to football,  and to run."
-      />
-      <ResumeHeading
-        heading="Music"
-        description="I listen to music of all genres and play the guitar and piano."
-      />
-      <ResumeHeading
-        heading="Learner"
-        description="I am open to learning new technologies with a focus on web application development."
-      />
+      {interests.map((interest, index) => (
+        <ResumeHeading
+          key={index}
+          heading={interest.heading}
+          description={interest.description}
+        />
+      ))}
     </div>,
   ];
 

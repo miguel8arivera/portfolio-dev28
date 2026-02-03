@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import ScreenHeading from "../../utilities/ScreenHeading/ScreenHeading";
 import ScrollService from "../../utilities/ScrollService";
 import Animations from "../../utilities/Animations";
+import { aboutMeContent } from "../../data/aboutMeData";
 import "./AboutMe.css";
 
 export default function AboutMe(props) {
@@ -20,23 +21,8 @@ export default function AboutMe(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const SCREEN_CONSTSANTS = {
-    description:
-      "I am a self-taught professional with a great passion for technology and learn something new every day and help implement technology to your ideas. ",
-    highlights: {
-      bullets: [
-        "Full Stack web development",
-        "Interactive Front End as per the design",
-        "React MongoDb Nextjs",
-        "Redux for State Managment",
-        "Building REST API",
-        "Managing database",
-      ],
-      heading: "Here are a Few Highlights:",
-    },
-  };
   const renderHighlight = () => {
-    return SCREEN_CONSTSANTS.highlights.bullets.map((value, i) => (
+    return aboutMeContent.highlights.bullets.map((value, i) => (
       <div className="highlight " key={i}>
         <div className="highlight-blob "></div>
         <span>{value}</span>
@@ -58,11 +44,11 @@ export default function AboutMe(props) {
           <div className="about-me-profile "></div>
           <div className="about-me-details ">
             <span className="about-me-description ">
-              {SCREEN_CONSTSANTS.description}
+              {aboutMeContent.description}
             </span>
             <div className="about-me-highlights ">
               <div className="highlight-heading ">
-                <span>{SCREEN_CONSTSANTS.highlights.heading}</span>
+                <span>{aboutMeContent.highlights.heading}</span>
               </div>
               {renderHighlight()}
             </div>
