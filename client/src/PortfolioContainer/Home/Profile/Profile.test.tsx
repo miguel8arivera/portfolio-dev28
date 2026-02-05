@@ -3,6 +3,7 @@ import { vi, describe, beforeEach, test, expect, it, afterEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Profile from './Profile';
+import ScrollService from '../../../utilities/ScrollService';
 
 // Mock TypeAnimation
 vi.mock('react-type-animation', () => ({
@@ -13,8 +14,10 @@ vi.mock('react-type-animation', () => ({
 
 // Mock ScrollService
 vi.mock('../../../utilities/ScrollService', () => ({
-  scrollHandler: {
-    scrollToHireMe: vi.fn(),
+  default: {
+    scrollHandler: {
+      scrollToHireMe: vi.fn(),
+    },
   },
 }));
 
@@ -90,7 +93,6 @@ describe('Profile Component', () => {
   });
 
   test('clicking "Hire Me" calls scrollToHireMe', () => {
-    const ScrollService = require('../../../utilities/ScrollService');
     render(<Profile />);
 
     const hireMeButton = screen.getByText("Hire Me");

@@ -3,6 +3,7 @@ import { vi, describe, beforeEach, test, expect, it, afterEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Header from './Header';
+import ScrollService from '../../../utilities/ScrollService';
 
 // Mock dependencies
 vi.mock('../../../utilities/commonUtils', () => ({
@@ -20,8 +21,10 @@ vi.mock('../../../utilities/commonUtils', () => ({
 }));
 
 vi.mock('../../../utilities/ScrollService', () => ({
-  currentScreenBroadcaster: {
-    subscribe: vi.fn(() => ({ unsubscribe: vi.fn() })),
+  default: {
+    currentScreenBroadcaster: {
+      subscribe: vi.fn(() => ({ unsubscribe: vi.fn() })),
+    },
   },
 }));
 
@@ -30,7 +33,6 @@ window.HTMLElement.prototype.scrollIntoView = vi.fn();
 
 describe('Header Component', () => {
   beforeEach(() => {
-    const ScrollService = require('../../../utilities/ScrollService');
     ScrollService.currentScreenBroadcaster.subscribe.mockImplementation(() => ({
       unsubscribe: vi.fn(),
     }));

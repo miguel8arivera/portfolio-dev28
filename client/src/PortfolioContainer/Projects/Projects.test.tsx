@@ -3,11 +3,14 @@ import { vi, describe, beforeEach, test, expect, it, afterEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Projects from './Projects';
+import ScrollService from '../../utilities/ScrollService';
 
 // Mock dependencies
 vi.mock('../../utilities/ScrollService', () => ({
-  currentScreenFadeIn: {
-    subscribe: vi.fn(() => ({ unsubscribe: vi.fn() })),
+  default: {
+    currentScreenFadeIn: {
+      subscribe: vi.fn(() => ({ unsubscribe: vi.fn() })),
+    },
   },
 }));
 
@@ -19,7 +22,6 @@ vi.mock('../../utilities/Animations', () => ({
 
 describe('Projects Component', () => {
   beforeEach(() => {
-    const ScrollService = require('../../utilities/ScrollService');
     ScrollService.currentScreenFadeIn.subscribe.mockImplementation(() => ({
       unsubscribe: vi.fn(),
     }));
@@ -28,8 +30,8 @@ describe('Projects Component', () => {
   test('renders projects component with heading', () => {
     render(<Projects id="projects" />);
 
-    expect(screen.getByText('A Bit of My Project')).toBeInTheDocument();
-    expect(screen.getByText('E&P - IT Related')).toBeInTheDocument();
+    expect(screen.getByText('Projects')).toBeInTheDocument();
+    expect(screen.getByText('My Creative Works')).toBeInTheDocument();
   });
 
   test('renders owl carousel', () => {
@@ -80,7 +82,6 @@ describe('Projects Component', () => {
 
   test('component cleans up subscription on unmount', () => {
     const unsubscribeMock = vi.fn();
-    const ScrollService = require('../../utilities/ScrollService');
     ScrollService.currentScreenFadeIn.subscribe.mockImplementation(() => ({
       unsubscribe: unsubscribeMock,
     }));

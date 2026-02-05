@@ -4,6 +4,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import ContactMe from './ContactMe';
+import ScrollService from '../../utilities/ScrollService';
 
 // Mock dependencies
 vi.mock('axios');
@@ -15,8 +16,10 @@ vi.mock('react-toastify', () => ({
 }));
 
 vi.mock('../../utilities/ScrollService', () => ({
-  currentScreenFadeIn: {
-    subscribe: vi.fn(() => ({ unsubscribe: vi.fn() })),
+  default: {
+    currentScreenFadeIn: {
+      subscribe: vi.fn(() => ({ unsubscribe: vi.fn() })),
+    },
   },
 }));
 
@@ -28,7 +31,6 @@ vi.mock('../../utilities/Animations', () => ({
 
 describe('ContactMe Component', () => {
   beforeEach(() => {
-    const ScrollService = require('../../utilities/ScrollService');
     ScrollService.currentScreenFadeIn.subscribe.mockImplementation(() => ({
       unsubscribe: vi.fn(),
     }));

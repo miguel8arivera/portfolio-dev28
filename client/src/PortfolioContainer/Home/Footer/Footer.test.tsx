@@ -3,11 +3,14 @@ import { vi, describe, beforeEach, test, expect, it, afterEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Footer from './Footer';
+import ScrollService from '../../../utilities/ScrollService';
 
 // Mock ScrollService
 vi.mock('../../../utilities/ScrollService', () => ({
-  scrollHandler: {
-    scrollToHome: vi.fn(),
+  default: {
+    scrollHandler: {
+      scrollToHome: vi.fn(),
+    },
   },
 }));
 
@@ -46,7 +49,6 @@ describe('Footer Component', () => {
   });
 
   test('clicking scroll button calls scrollToHome', () => {
-    const ScrollService = require('../../../utilities/ScrollService');
     const { container } = render(<Footer />);
 
     const scrollButton = container.querySelector('.btn-scroll');

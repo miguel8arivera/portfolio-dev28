@@ -96,11 +96,18 @@ vi.mock('./hooks/useTranslation', () => ({
       contact: {
         title: 'Contact Me',
         subTitle: 'Let\'s Keep In Touch',
-        form: {
-          name: 'Name',
-          email: 'Email',
-          message: 'Message',
-          send: 'Send',
+        description: 'Send me a message and I\'ll get back to you as soon as possible!',
+        nameLabel: 'Name',
+        emailLabel: 'Email',
+        messageLabel: 'Message',
+        sendButton: 'Send',
+        toast: {
+          success: 'Thank you for contacting Miguel!',
+          error: 'Failed to send message. Please try again.',
+          invalidEmail: 'Please enter a valid email address',
+          invalidName: 'Please enter a valid name (letters only)',
+          fillAll: 'Please fill all the fields',
+          malicious: 'Invalid input detected. Please remove special characters.',
         },
       },
     },

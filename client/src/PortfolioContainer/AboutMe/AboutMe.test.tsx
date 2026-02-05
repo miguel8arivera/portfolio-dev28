@@ -3,14 +3,17 @@ import { vi, describe, beforeEach, test, expect, it, afterEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import AboutMe from './AboutMe';
+import ScrollService from '../../utilities/ScrollService';
 
 // Mock dependencies
 vi.mock('../../utilities/ScrollService', () => ({
-  currentScreenFadeIn: {
-    subscribe: vi.fn(() => ({ unsubscribe: vi.fn() })),
-  },
-  scrollHandler: {
-    scrollToHireMe: vi.fn(),
+  default: {
+    currentScreenFadeIn: {
+      subscribe: vi.fn(() => ({ unsubscribe: vi.fn() })),
+    },
+    scrollHandler: {
+      scrollToHireMe: vi.fn(),
+    },
   },
 }));
 
@@ -22,7 +25,6 @@ vi.mock('../../utilities/Animations', () => ({
 
 describe('AboutMe Component', () => {
   beforeEach(() => {
-    const ScrollService = require('../../utilities/ScrollService');
     ScrollService.currentScreenFadeIn.subscribe.mockImplementation(() => ({
       unsubscribe: vi.fn(),
     }));
@@ -33,14 +35,14 @@ describe('AboutMe Component', () => {
     render(<AboutMe id="about" />);
 
     expect(screen.getByText('About Me')).toBeInTheDocument();
-    expect(screen.getByText('My Portfolio Overview')).toBeInTheDocument();
+    expect(screen.getByText('Why Choose Me?')).toBeInTheDocument();
   });
 
   test('displays description text', () => {
     render(<AboutMe id="about" />);
 
     expect(
-      screen.getByText(/I am a self-taught professional with a great passion for technology/i)
+      screen.getByText(/I am a passionate Full Stack Developer with expertise in building modern web applications/i)
     ).toBeInTheDocument();
   });
 
@@ -55,11 +57,10 @@ describe('AboutMe Component', () => {
 
     const highlights = [
       'Full Stack web development',
-      'Interactive Front End as per the design',
-      'React MongoDb Nextjs',
-      'Redux for State Management',
-      'Building REST API',
-      'Managing database',
+      'Interactive Front End design',
+      'React and React Native',
+      'Building REST APIs',
+      'Managing databases',
     ];
 
     highlights.forEach((highlight) => {
@@ -71,44 +72,43 @@ describe('AboutMe Component', () => {
     const { container } = render(<AboutMe id="about" />);
 
     const highlights = container.querySelectorAll('.highlight');
-    expect(highlights.length).toBe(6);
+    expect(highlights.length).toBe(5);
 
     const highlightBlobs = container.querySelectorAll('.highlight-blob');
-    expect(highlightBlobs.length).toBe(6);
+    expect(highlightBlobs.length).toBe(5);
   });
 
-  test('renders "Let\'s Discuss!" button', () => {
+  test('renders "Hire Me" button', () => {
     render(<AboutMe id="about" />);
 
-    const discussButton = screen.getByText("Let's Discuss!");
-    expect(discussButton).toBeInTheDocument();
-    expect(discussButton.closest('button')).toHaveClass('btn', 'primary-btn');
+    const hireMeButton = screen.getByText("Hire Me");
+    expect(hireMeButton).toBeInTheDocument();
+    expect(hireMeButton.closest('button')).toHaveClass('btn', 'primary-btn');
   });
 
-  test('clicking "Let\'s Discuss!" button calls scrollToHireMe', () => {
-    const ScrollService = require('../../utilities/ScrollService');
+  test('clicking "Hire Me" button calls scrollToHireMe', () => {
     render(<AboutMe id="about" />);
 
-    const discussButton = screen.getByText("Let's Discuss!");
-    fireEvent.click(discussButton);
+    const hireMeButton = screen.getByText("Hire Me");
+    fireEvent.click(hireMeButton);
 
     expect(ScrollService.scrollHandler.scrollToHireMe).toHaveBeenCalled();
   });
 
-  test('renders "Get CV" button', () => {
+  test('renders "Get Resume" button', () => {
     render(<AboutMe id="about" />);
 
-    const cvButton = screen.getByText('Get CV');
-    expect(cvButton).toBeInTheDocument();
-    expect(cvButton.closest('button')).toHaveClass('btn', 'highlighted-btn');
+    const resumeButton = screen.getByText('Get Resume');
+    expect(resumeButton).toBeInTheDocument();
+    expect(resumeButton.closest('button')).toHaveClass('btn', 'highlighted-btn');
   });
 
-  test('CV download link has correct attributes', () => {
+  test('Resume download link has correct attributes', () => {
     render(<AboutMe id="about" />);
 
-    const cvLink = screen.getByText('Get CV').closest('a');
-    expect(cvLink).toHaveAttribute('href', 'My Portfolio.pdf');
-    expect(cvLink).toHaveAttribute('download', 'My Portfolio.pdf');
+    const resumeLink = screen.getByText('Get Resume').closest('a');
+    expect(resumeLink).toHaveAttribute('href', 'My Portfolio.pdf');
+    expect(resumeLink).toHaveAttribute('download', 'My Portfolio.pdf');
   });
 
   test('applies correct CSS classes', () => {
@@ -121,7 +121,6 @@ describe('AboutMe Component', () => {
 
   test('component cleans up subscription on unmount', () => {
     const unsubscribeMock = vi.fn();
-    const ScrollService = require('../../utilities/ScrollService');
     ScrollService.currentScreenFadeIn.subscribe.mockImplementation(() => ({
       unsubscribe: unsubscribeMock,
     }));
