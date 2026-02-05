@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { TypeAnimation } from "react-type-animation";
 import ScrollService from "../../../utilities/ScrollService";
 import {
   socialMediaLinks,
-  roleAnimationSequence,
   profileInfo,
 } from "../../../data/profileData";
+import { useTranslation } from "../../../hooks/useTranslation";
+import { getRoleAnimationSequence } from "../../../utilities/animationHelpers";
 import "./Profile.css";
 
 export default function Profile() {
+  const { t, language } = useTranslation();
+
+  // Get translated animation sequence
+  const roleAnimationSequence = useMemo(
+    () => getRoleAnimationSequence(language),
+    [language]
+  );
   return (
     <div className="profile-container">
       <div className="profile-parent">
@@ -25,7 +33,7 @@ export default function Profile() {
           <div className="profile-details-name">
             <span className="primary-text">
               {" "}
-              Hello, I'm <span className="highlighted-text">{profileInfo.name}</span>
+              {t.home.greeting} <span className="highlighted-text">{profileInfo.name}</span>
             </span>
           </div>
           <div className="profile-details-role">
@@ -41,7 +49,7 @@ export default function Profile() {
                 />
               </h1>
               <span className="profile-role-tagline">
-                {profileInfo.tagline}
+                {t.home.tagline}
               </span>
             </span>
           </div>
@@ -51,10 +59,10 @@ export default function Profile() {
               onClick={() => ScrollService.scrollHandler.scrollToHireMe()}
             >
               {" "}
-              Let's Discuss!{" "}
+              {t.home.hireMe}{" "}
             </button>
             <a href={profileInfo.cvFileName} download={profileInfo.cvFileName}>
-              <button className="btn highlighted-btn">Get CV</button>
+              <button className="btn highlighted-btn">{t.home.getResume}</button>
             </a>
           </div>
         </div>

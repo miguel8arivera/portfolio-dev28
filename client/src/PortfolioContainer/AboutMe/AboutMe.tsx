@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import ScreenHeading from "../../utilities/ScreenHeading/ScreenHeading";
 import ScrollService from "../../utilities/ScrollService";
 import Animations from "../../utilities/Animations";
-import { aboutMeContent } from "../../data/aboutMeData";
+import { useTranslation } from "../../hooks/useTranslation";
 import "./AboutMe.css";
 
 export default function AboutMe(props) {
+  const { t } = useTranslation();
   let fadeInScreenHandler = (screen) => {
     if (screen.fadeInScreen !== props.id) return;
     Animations.animations.fadeInScreen(props.id);
@@ -22,7 +23,7 @@ export default function AboutMe(props) {
   }, []);
 
   const renderHighlight = () => {
-    return aboutMeContent.highlights.bullets.map((value, i) => (
+    return t.aboutMe.whyChooseMe.map((value, i) => (
       <div className="highlight " key={i}>
         <div className="highlight-blob "></div>
         <span>{value}</span>
@@ -37,18 +38,18 @@ export default function AboutMe(props) {
     >
       <div className="about-me-parent ">
         <ScreenHeading
-          title={"About Me"}
-          subHeading={"My Portfolio Overview"}
+          title={t.aboutMe.title}
+          subHeading={t.aboutMe.subTitle}
         />
         <div className="about-me-card ">
           <div className="about-me-profile "></div>
           <div className="about-me-details ">
             <span className="about-me-description ">
-              {aboutMeContent.description}
+              {t.aboutMe.description}
             </span>
             <div className="about-me-highlights ">
               <div className="highlight-heading ">
-                <span>{aboutMeContent.highlights.heading}</span>
+                <span>{t.aboutMe.highlights}</span>
               </div>
               {renderHighlight()}
             </div>
@@ -58,10 +59,10 @@ export default function AboutMe(props) {
                 onClick={() => ScrollService.scrollHandler.scrollToHireMe()}
               >
                 {" "}
-                Let's Discuss!{" "}
+                {t.aboutMe.hireMe}{" "}
               </button>
               <a href="My Portfolio.pdf" download="My Portfolio.pdf">
-                <button className="btn highlighted-btn ">Get CV</button>
+                <button className="btn highlighted-btn ">{t.aboutMe.getResume}</button>
               </a>
             </div>
           </div>

@@ -1,4 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faGraduationCap,
+  faBriefcase,
+  faCode,
+  faLaptopCode,
+  faProjectDiagram,
+  faHeart,
+} from "@fortawesome/free-solid-svg-icons";
 import Animations from "../../utilities/Animations";
 import ScreenHeading from "../../utilities/ScreenHeading/ScreenHeading";
 import ScrollService from "../../utilities/ScrollService";
@@ -6,16 +15,52 @@ import {
   resumeBullets,
   programmingSkillsDetails,
   applicationSkillsDetails,
-  projectsDetails,
-  education,
-  workExperience,
-  interests,
 } from "../../data/resumeData";
+import { useTranslation } from "../../hooks/useTranslation";
+import {
+  getTranslatedEducation,
+  getTranslatedWorkExperience,
+  getTranslatedProjectsDetails,
+  getTranslatedInterests,
+} from "../../utilities/dataHelpers";
 import "./Resume.css";
 
 const Resume = (props) => {
+  const { t, language } = useTranslation();
   const [selectedBulletIndex, setSelectedBulletIndex] = useState(0);
   const [carousalOffsetStyle, setCarousalOffsetStyle] = useState<any>({});
+
+  // Get translated data
+  const education = useMemo(() => getTranslatedEducation(language), [language]);
+  const workExperience = useMemo(() => getTranslatedWorkExperience(language), [language]);
+  const projectsDetails = useMemo(() => getTranslatedProjectsDetails(language), [language]);
+  const interests = useMemo(() => getTranslatedInterests(language), [language]);
+
+  // Icon mapping for resume bullets - map English labels to icons
+  const getBulletIcon = (englishLabel: string) => {
+    const iconMap = {
+      "Education": faGraduationCap,
+      "Work History": faBriefcase,
+      "Programming Skills": faCode,
+      "Application Skills": faLaptopCode,
+      "Projects": faProjectDiagram,
+      "Interests": faHeart,
+    };
+    return iconMap[englishLabel] || faCode;
+  };
+
+  // Get translated label
+  const getTranslatedLabel = (englishLabel: string): string => {
+    const labelMap: { [key: string]: string } = {
+      "Education": t.resume.education,
+      "Work History": t.resume.workHistory,
+      "Programming Skills": t.resume.programmingSkills,
+      "Application Skills": t.resume.applicationSkills,
+      "Projects": t.resume.projects,
+      "Interests": t.resume.interests,
+    };
+    return labelMap[englishLabel] || englishLabel;
+  };
 
   let fadeInScreenHandler = (screen) => {
     if (screen.fadeInScreen !== props.id) return;
@@ -175,12 +220,11 @@ const Resume = (props) => {
         }
         key={index}
       >
-        <img
+        <FontAwesomeIcon
           className="bullet-logo"
-          src={require(`../../assets/Resume/${bullet.logoSrc}`).default}
-          alt="B"
+          icon={getBulletIcon(bullet.label)}
         />
-        <span className="bullet-label">{bullet.label}</span>
+        <span className="bullet-label">{getTranslatedLabel(bullet.label)}</span>
       </div>
     ));
   };
@@ -202,7 +246,7 @@ const Resume = (props) => {
       id={props.id || ""}
     >
       <div className="resume-content">
-        <ScreenHeading title={"Resume"} subHeading={"My formal Bio Details"} />
+        <ScreenHeading title={t.resume.title} subHeading={t.resume.subTitle} />
         <div className="resume-card">
           <div className="resume-bullets">
             <div className="bullet-container">

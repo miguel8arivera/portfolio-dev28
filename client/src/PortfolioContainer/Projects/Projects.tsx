@@ -1,16 +1,41 @@
-import React, { useEffect } from "react";
-import OwlCarousel from "react-owl-carousel";
-import "owl.carousel/dist/assets/owl.carousel.css";
-import "owl.carousel/dist/assets/owl.theme.default.css";
+import React, { useEffect, useMemo } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import ScreenHeading from "../../utilities/ScreenHeading/ScreenHeading";
 import ScrollService from "../../utilities/ScrollService";
 import Animations from "../../utilities/Animations";
-import { projectsData } from "../../data/projectsData";
-import { carouselOptions } from "../../config/carouselConfig";
+import { useTranslation } from "../../hooks/useTranslation";
+import { getTranslatedProjects } from "../../utilities/dataHelpers";
 import "./Projects.css";
 
 export default function Projects(props) {
+  const { t, language } = useTranslation();
+
+  // Get translated projects data
+  const projectsData = useMemo(
+    () => {
+      const data = getTranslatedProjects(language);
+      console.log('Projects data:', data);
+      return data;
+    },
+    [language]
+  );
+
+  // Slider settings
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    pauseOnHover: true,
+    arrows: true,
+  };
+
   let fadeInScreenHandler = (screen) => {
     if (screen.fadeInScreen !== props.id) return;
     Animations.animations.fadeInScreen(props.id);
@@ -26,22 +51,21 @@ export default function Projects(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log('Translation object:', t.projects);
+  console.log('Language:', language);
+
   return (
     <div>
       <ScreenHeading
-        title={"A Bit of My Project"}
-        subHeading={"E&P - IT Related"}
+        title={t.projects.title}
+        subHeading={t.projects.subTitle}
       />
       <section className="project-section fade-in" id={props.id || ""}>
         <div className="container">
           <div className="row">
-            <OwlCarousel
-              className="owl-carousel"
-              id="project-carousel"
-              {...carouselOptions}
-            >
+            <Slider {...sliderSettings} key={language}>
               {projectsData.map((project) => (
-                <div className="col-lg-12" key={project.id}>
+                <div key={project.id}>
                   <div className="project-item">
                     <div className="project-desc">
                       <p>
@@ -57,7 +81,7 @@ export default function Projects(props) {
                   </div>
                 </div>
               ))}
-            </OwlCarousel>
+            </Slider>
           </div>
         </div>
       </section>

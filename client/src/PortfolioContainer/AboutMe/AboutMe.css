@@ -3,7 +3,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 50px 0 0 0;
+  margin: 0;
+  padding: 60px 0;
+  background-color: var(--bg-primary);
 }
 .about-me-parent {
   max-width: 1000px;
@@ -12,47 +14,127 @@
 .about-me-card {
   display: flex;
   width: 100%;
-  box-shadow: 0 0px 20px -2px #1f2235;
-  border-radius: 0px 30px 30px 5px;
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+  box-shadow: 0 8px 32px var(--shadow-color);
+  border-radius: 24px;
+  border: 1px solid var(--border-light);
+  overflow: hidden;
+  position: relative;
 }
+
+.about-me-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-green));
+}
+
 .about-me-profile {
   width: 50%;
   background-image: url("../../assets/AboutMe/me.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  position: relative;
 }
+
+.about-me-profile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 0%, var(--bg-secondary) 100%);
+  opacity: 0.1;
+}
+
 .about-me-details {
   width: 48%;
   text-align: justify;
-  padding: 30px;
+  padding: 40px;
 }
+
 .about-me-description {
-  font-size: 12px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  font-weight: 400;
 }
 .about-me-highlights {
-  margin: 80px 0;
+  margin: 40px 0 24px 0;
 }
+
 .highlght-heading {
-  font-family: "Montserrat Medium";
-  font-size: 14px;
-  margin: 0 0 5px 0;
+  font-family: "Poppins Bold";
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
+
 .highlight {
   display: flex;
   align-items: center;
-  margin: 5px 0;
-  font-size: 12px;
+  margin: 12px 0;
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
+
+.highlight:hover {
+  background: var(--bg-secondary);
+  transform: translateX(4px);
+}
+
 .highlight-blob {
-  height: 12px;
-  width: 12px;
-  margin: 0 10px 0 0;
-  background-color: #04c3ff;
-  border-radius: 25%;
+  height: 10px;
+  width: 10px;
+  margin: 0 12px 0 0;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  border-radius: 50%;
+  box-shadow: 0 2px 8px var(--accent-blue-shadow);
+  flex-shrink: 0;
 }
+.about-me-options {
+  margin-top: 32px;
+}
+
 .about-me-options .highlighted-btn {
-  margin: 0 0 0 30px;
+  margin: 0 0 0 16px;
+  background: linear-gradient(135deg, var(--accent-orange), var(--accent-yellow));
+  border: none;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 12px var(--accent-orange-shadow);
+  transition: all 0.3s ease;
+}
+
+.about-me-options .highlighted-btn:hover {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--accent-blue-shadow);
+}
+
+.about-me-options .primary-btn {
+  background: var(--bg-primary);
+  border: 2px solid var(--accent-blue);
+  color: var(--accent-blue);
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.about-me-options .primary-btn:hover {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  color: white;
+  border-color: transparent;
+  transform: translateY(-2px);
 }
 
 /*IPAD PRO RESPONSIVENESS*/

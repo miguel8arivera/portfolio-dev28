@@ -9,51 +9,104 @@
 .profile-parent {
   display: flex;
   align-items: center;
-  color: aliceblue;
+  color: var(--text-secondary);
 }
 .profile-details-name {
-  font-size: 24px;
-  font-family: "OstrichSans Black";
+  font-size: 28px;
+  font-family: "Poppins Bold";
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  letter-spacing: 1px;
 }
+
 .profile-details-role {
   display: flex;
   flex-direction: column;
-  margin: 14px 0 24px 0;
+  margin: 14px 0 32px 0;
 }
+
 .profile-details-role h1 {
-  font-size: 32px;
-  font-family: "OstrichSans Black";
+  font-size: 48px;
+  font-family: "Poppins Bold";
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0;
 }
+
 .primary-text {
-  font-size: 2rem;
-  color: #fff;
+  font-size: 3rem;
+  background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
+
 .highlighted-text {
-  color: #04c3ff;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
 }
+
 .profile-role-tagline {
-  font-size: 25px;
-  margin: 5px 0 0 0;
-  font-family: "OstrichSans Black";
+  font-size: 20px;
+  margin: 12px 0 0 0;
+  font-family: "Montserrat Medium";
+  color: var(--text-tertiary);
+  font-weight: 500;
+  line-height: 1.6;
 }
 .profile-options .highlighted-btn {
   margin: 0 0 0 28px;
 }
+.profile-options .highlighted-btn {
+  background: linear-gradient(135deg, var(--accent-orange), var(--accent-yellow));
+  border: none;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 12px var(--accent-orange-shadow);
+  transition: all 0.3s ease;
+}
+
 .profile-options .highlighted-btn:hover {
   margin: 0 0 0 28px;
-  background-color: #04c3ff;
-  color: #111111;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--accent-blue-shadow);
+  color: white;
 }
 .profile-picture {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 5px 0px 0px var(--white);
   border-radius: 50%;
   height: 380px;
   width: 380px;
   margin: 0 0px 0 200px;
+  position: relative;
 }
+
+.profile-picture::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-green));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: rotate 4s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 .profile-picture-background {
   height: 92%;
   width: 92%;
@@ -61,18 +114,35 @@
   background-size: cover;
   border-radius: 50%;
   background-repeat: no-repeat;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 32px var(--shadow-color);
 }
+
 .profile-picture-background:hover {
-  transform: scale(1.07);
-  transition: 1s ease-out;
+  transform: scale(1.05);
 }
+.colz {
+  margin-top: 24px;
+}
+
+.colz .colz-icon {
+  display: inline-block;
+  margin-right: 8px;
+}
+
 .colz .colz-icon i {
-  color: rgb(16, 113, 158);
-  padding: 30px;
+  font-size: 32px;
+  color: var(--text-tertiary);
+  padding: 12px;
   padding-left: 0px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 }
+
 .colz .colz-icon i:hover {
-  transform: scale(1.5);
+  transform: translateY(-4px) scale(1.2);
+  color: var(--accent-blue);
+  filter: drop-shadow(0 4px 12px var(--accent-blue-shadow));
 }
 
 @media screen and (max-width: 1110px) {

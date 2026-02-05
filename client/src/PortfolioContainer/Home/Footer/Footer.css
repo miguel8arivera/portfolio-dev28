@@ -28,29 +28,36 @@
   }
 }
 .scroll-container {
-  position: absolute;
+  position: fixed;
   text-align: center;
-  right: 0;
-  margin-right: 9px;
+  right: 9px;
+  bottom: 20px;
   overflow: hidden;
   flex-direction: column;
-  margin-top: 2950px;
-  z-index: 100;
+  z-index: 1000;
   cursor: pointer;
 }
 
 .btn-scroll {
   width: 50px;
   height: 50px;
-  color: darkgrey;
+  color: var(--text-dark);
   font-size: 24px;
-  background-color: var(--light-yellow);
+  background-color: var(--accent-green);
   border-radius: 10px;
   border: none;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  transition: all 0.3s ease;
+}
+
+.btn-scroll:hover {
+  background-color: var(--accent-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px var(--shadow-color);
 }
 .btn-scroll i:hover {
   transform: rotate(360deg);
-  color: aliceblue;
+  color: var(--text-secondary);
 }
 
 .btn-scroll i {

@@ -16,7 +16,14 @@
       "Bash(elif [ -f .eslintrc.js ])",
       "Bash(then cat .eslintrc.js)",
       "Bash(else echo \"No ESLint config found\")",
-      "Bash(fi)"
+      "Bash(fi)",
+      "Bash(dir \"C:\\\\Users\\\\miguel.ochoa\\\\workspace\\\\portfolio-dev28\\\\client\\\\src\\\\utilities\")",
+      "Bash(dir \"C:\\\\Users\\\\miguel.ochoa\\\\workspace\\\\portfolio-dev28\\\\client\\\\src\\\\config\")",
+      "Bash(dir \"C:\\\\Users\\\\miguel.ochoa\\\\workspace\\\\portfolio-dev28\\\\client\\\\src\\\\data\")",
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "Bash(npm start)",
+      "Bash(timeout 30 tail:*)"
     ]
   }
 }

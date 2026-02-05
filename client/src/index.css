@@ -99,6 +99,13 @@ body {
   font-family: "Montserrat Medium";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+#root {
+  background-color: var(--bg-primary);
+  min-height: 100vh;
 }
 
 code {
@@ -137,11 +144,10 @@ body ::-webkit-scrollbar-thumb {
 }
 
 .primary-btn {
-  color: var(--white);
+  color: var(--text-primary);
   border: 2px solid linen;
   font-size: 12px;
-  background-color: #1f2235;
-  color: white;
+  background-color: var(--bg-primary);
 }
 /* @media only screen and (max-width: 414px) {
   .primary-btn {
@@ -150,15 +156,15 @@ body ::-webkit-scrollbar-thumb {
 } */
 
 .primary-btn:hover {
-  color: aliceblue;
-  border: 2px solid #ebeb5e;
-  background-color: #1f2235;
+  color: var(--text-secondary);
+  border: 2px solid var(--accent-yellow);
+  background-color: var(--bg-primary);
 }
 
 .highlighted-btn {
-  color: black;
+  color: var(--text-dark);
   font-size: 12px;
-  background-color: var(--light-yellow);
+  background-color: var(--accent-yellow);
 }
 @media only screen and (max-width: 568px) {
   .highlighted-btn {

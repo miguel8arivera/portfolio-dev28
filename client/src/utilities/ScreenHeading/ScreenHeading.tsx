@@ -6,7 +6,7 @@ interface ScreenHeadingProps {
   subHeading?: string;
 }
 
-export default function ScreenHeading({ title, subHeading }: ScreenHeadingProps): JSX.Element {
+export default function ScreenHeading({ title, subHeading }: ScreenHeadingProps): React.ReactElement {
   return (
     <div className='heading-container'>
       <div className='screen-heading'>
