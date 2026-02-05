@@ -1,18 +1,19 @@
 import React from 'react';
+import { vi, describe, beforeEach, test, expect, it, afterEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Footer from './Footer';
 
 // Mock ScrollService
-jest.mock('../../../utilities/ScrollService', () => ({
+vi.mock('../../../utilities/ScrollService', () => ({
   scrollHandler: {
-    scrollToHome: jest.fn(),
+    scrollToHome: vi.fn(),
   },
 }));
 
 describe('Footer Component', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('renders footer component', () => {

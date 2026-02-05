@@ -1,10 +1,11 @@
 import React from 'react';
+import { vi, describe, beforeEach, test, expect, it, afterEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Header from './Header';
 
 // Mock dependencies
-jest.mock('../../../utilities/commonUtils', () => ({
+vi.mock('../../../utilities/commonUtils', () => ({
   TOTAL_SCREENS: [
     { screen_name: 'Home' },
     { screen_name: 'AboutMe' },
@@ -12,26 +13,26 @@ jest.mock('../../../utilities/commonUtils', () => ({
     { screen_name: 'Projects' },
     { screen_name: 'ContactMe' },
   ],
-  GET_SCREEN_INDEX: jest.fn((name) => {
+  GET_SCREEN_INDEX: vi.fn((name) => {
     const screens = ['Home', 'AboutMe', 'Resume', 'Projects', 'ContactMe'];
     return screens.indexOf(name);
   }),
 }));
 
-jest.mock('../../../utilities/ScrollService', () => ({
+vi.mock('../../../utilities/ScrollService', () => ({
   currentScreenBroadcaster: {
-    subscribe: jest.fn(() => ({ unsubscribe: jest.fn() })),
+    subscribe: vi.fn(() => ({ unsubscribe: vi.fn() })),
   },
 }));
 
 // Mock scrollIntoView
-window.HTMLElement.prototype.scrollIntoView = jest.fn();
+window.HTMLElement.prototype.scrollIntoView = vi.fn();
 
 describe('Header Component', () => {
   beforeEach(() => {
     const ScrollService = require('../../../utilities/ScrollService');
     ScrollService.currentScreenBroadcaster.subscribe.mockImplementation(() => ({
-      unsubscribe: jest.fn(),
+      unsubscribe: vi.fn(),
     }));
   });
 
@@ -80,7 +81,7 @@ describe('Header Component', () => {
     // Mock getElementById
     const mockElement = document.createElement('div');
     mockElement.id = 'Home';
-    jest.spyOn(document, 'getElementById').mockReturnValue(mockElement);
+    vi.spyOn(document, 'getElementById').mockReturnValue(mockElement);
 
     render(<Header />);
 
@@ -151,7 +152,7 @@ describe('Header Component', () => {
   });
 
   test('component cleans up subscription on unmount', () => {
-    const unsubscribeMock = jest.fn();
+    const unsubscribeMock = vi.fn();
     const ScrollService = require('../../../utilities/ScrollService');
     ScrollService.currentScreenBroadcaster.subscribe.mockImplementation(() => ({
       unsubscribe: unsubscribeMock,
@@ -164,7 +165,7 @@ describe('Header Component', () => {
   });
 
   test('does not scroll if element not found', () => {
-    jest.spyOn(document, 'getElementById').mockReturnValue(null);
+    vi.spyOn(document, 'getElementById').mockReturnValue(null);
 
     render(<Header />);
 

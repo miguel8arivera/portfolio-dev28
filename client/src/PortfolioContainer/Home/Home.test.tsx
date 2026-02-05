@@ -1,22 +1,23 @@
 import React from 'react';
+import { vi, describe, beforeEach, test, expect, it, afterEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Home from './Home';
 
 // Mock child components
-jest.mock('./Header/Header', () => {
+vi.mock('./Header/Header', () => {
   return function Header() {
     return <div data-testid="header">Header Component</div>;
   };
 });
 
-jest.mock('./Profile/Profile', () => {
+vi.mock('./Profile/Profile', () => {
   return function Profile() {
     return <div data-testid="profile">Profile Component</div>;
   };
 });
 
-jest.mock('./Footer/Footer', () => {
+vi.mock('./Footer/Footer', () => {
   return function Footer() {
     return <div data-testid="footer">Footer Component</div>;
   };

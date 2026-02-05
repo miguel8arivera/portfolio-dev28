@@ -1,25 +1,26 @@
 import React from 'react';
+import { vi, describe, beforeEach, test, expect, it, afterEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Profile from './Profile';
 
 // Mock TypeAnimation
-jest.mock('react-type-animation', () => ({
+vi.mock('react-type-animation', () => ({
   TypeAnimation: ({ sequence }: any) => (
     <span data-testid="type-animation">{sequence[0]}</span>
   ),
 }));
 
 // Mock ScrollService
-jest.mock('../../../utilities/ScrollService', () => ({
+vi.mock('../../../utilities/ScrollService', () => ({
   scrollHandler: {
-    scrollToHireMe: jest.fn(),
+    scrollToHireMe: vi.fn(),
   },
 }));
 
 describe('Profile Component', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('renders profile component', () => {

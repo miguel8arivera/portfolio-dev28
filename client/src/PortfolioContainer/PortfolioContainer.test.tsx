@@ -1,10 +1,11 @@
 import React from 'react';
+import { vi, describe, beforeEach, test, expect, it, afterEach } from 'vitest';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import PortfolioContainer from './PortfolioContainer';
 
 // Mock commonUtils
-jest.mock('../utilities/commonUtils', () => ({
+vi.mock('../utilities/commonUtils', () => ({
   TOTAL_SCREENS: [
     {
       screen_name: 'Home',

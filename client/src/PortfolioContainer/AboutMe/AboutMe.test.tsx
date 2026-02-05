@@ -1,21 +1,22 @@
 import React from 'react';
+import { vi, describe, beforeEach, test, expect, it, afterEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import AboutMe from './AboutMe';
 
 // Mock dependencies
-jest.mock('../../utilities/ScrollService', () => ({
+vi.mock('../../utilities/ScrollService', () => ({
   currentScreenFadeIn: {
-    subscribe: jest.fn(() => ({ unsubscribe: jest.fn() })),
+    subscribe: vi.fn(() => ({ unsubscribe: vi.fn() })),
   },
   scrollHandler: {
-    scrollToHireMe: jest.fn(),
+    scrollToHireMe: vi.fn(),
   },
 }));
 
-jest.mock('../../utilities/Animations', () => ({
+vi.mock('../../utilities/Animations', () => ({
   animations: {
-    fadeInScreen: jest.fn(),
+    fadeInScreen: vi.fn(),
   },
 }));
 
@@ -23,7 +24,7 @@ describe('AboutMe Component', () => {
   beforeEach(() => {
     const ScrollService = require('../../utilities/ScrollService');
     ScrollService.currentScreenFadeIn.subscribe.mockImplementation(() => ({
-      unsubscribe: jest.fn(),
+      unsubscribe: vi.fn(),
     }));
     ScrollService.scrollHandler.scrollToHireMe.mockClear();
   });
@@ -119,7 +120,7 @@ describe('AboutMe Component', () => {
   });
 
   test('component cleans up subscription on unmount', () => {
-    const unsubscribeMock = jest.fn();
+    const unsubscribeMock = vi.fn();
     const ScrollService = require('../../utilities/ScrollService');
     ScrollService.currentScreenFadeIn.subscribe.mockImplementation(() => ({
       unsubscribe: unsubscribeMock,
