@@ -5,23 +5,23 @@ import '@testing-library/jest-dom';
 import Home from './Home';
 
 // Mock child components
-vi.mock('./Header/Header', () => {
-  return function Header() {
+vi.mock('./Header/Header', () => ({
+  default: function Header() {
     return <div data-testid="header">Header Component</div>;
-  };
-});
+  }
+}));
 
-vi.mock('./Profile/Profile', () => {
-  return function Profile() {
+vi.mock('./Profile/Profile', () => ({
+  default: function Profile() {
     return <div data-testid="profile">Profile Component</div>;
-  };
-});
+  }
+}));
 
-vi.mock('./Footer/Footer', () => {
-  return function Footer() {
+vi.mock('./Footer/Footer', () => ({
+  default: function Footer() {
     return <div data-testid="footer">Footer Component</div>;
-  };
-});
+  }
+}));
 
 describe('Home Component', () => {
   test('renders home container', () => {

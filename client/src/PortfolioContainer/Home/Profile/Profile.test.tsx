@@ -26,7 +26,7 @@ describe('Profile Component', () => {
   test('renders profile component', () => {
     render(<Profile />);
 
-    expect(screen.getByText(/Hello, I'm/i)).toBeInTheDocument();
+    expect(screen.getByText(/Hello, I am/i)).toBeInTheDocument();
     expect(screen.getByText('Miguel')).toBeInTheDocument();
   });
 
@@ -42,7 +42,7 @@ describe('Profile Component', () => {
     render(<Profile />);
 
     expect(
-      screen.getByText(/I am passionate about Front-End development/i)
+      screen.getByText(/Building scalable and modern web applications/i)
     ).toBeInTheDocument();
   });
 
@@ -81,38 +81,38 @@ describe('Profile Component', () => {
     expect(githubLink).toHaveAttribute('href', 'https://github.com/miguel8arivera');
   });
 
-  test('renders "Let\'s Discuss!" button', () => {
+  test('renders "Hire Me" button', () => {
     render(<Profile />);
 
-    const discussButton = screen.getByText("Let's Discuss!");
-    expect(discussButton).toBeInTheDocument();
-    expect(discussButton.closest('button')).toHaveClass('btn', 'primary-btn');
+    const hireMeButton = screen.getByText("Hire Me");
+    expect(hireMeButton).toBeInTheDocument();
+    expect(hireMeButton.closest('button')).toHaveClass('btn', 'primary-btn');
   });
 
-  test('clicking "Let\'s Discuss!" calls scrollToHireMe', () => {
+  test('clicking "Hire Me" calls scrollToHireMe', () => {
     const ScrollService = require('../../../utilities/ScrollService');
     render(<Profile />);
 
-    const discussButton = screen.getByText("Let's Discuss!");
-    fireEvent.click(discussButton);
+    const hireMeButton = screen.getByText("Hire Me");
+    fireEvent.click(hireMeButton);
 
     expect(ScrollService.scrollHandler.scrollToHireMe).toHaveBeenCalled();
   });
 
-  test('renders "Get CV" button', () => {
+  test('renders "Get Resume" button', () => {
     render(<Profile />);
 
-    const cvButton = screen.getByText('Get CV');
-    expect(cvButton).toBeInTheDocument();
-    expect(cvButton.closest('button')).toHaveClass('btn', 'highlighted-btn');
+    const resumeButton = screen.getByText('Get Resume');
+    expect(resumeButton).toBeInTheDocument();
+    expect(resumeButton.closest('button')).toHaveClass('btn', 'highlighted-btn');
   });
 
-  test('CV download link has correct attributes', () => {
+  test('Resume download link has correct attributes', () => {
     render(<Profile />);
 
-    const cvLink = screen.getByText('Get CV').closest('a');
-    expect(cvLink).toHaveAttribute('href', 'My Portfolio.pdf');
-    expect(cvLink).toHaveAttribute('download', 'My Portfolio.pdf');
+    const resumeLink = screen.getByText('Get Resume').closest('a');
+    expect(resumeLink).toHaveAttribute('href', 'My Portfolio.pdf');
+    expect(resumeLink).toHaveAttribute('download', 'My Portfolio.pdf');
   });
 
   test('renders social media icons with correct classes', () => {

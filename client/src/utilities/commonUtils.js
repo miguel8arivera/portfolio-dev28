@@ -1,8 +1,8 @@
-import Home from '../PortfolioContainer/Home/Home';
-import AboutMe from '../PortfolioContainer/AboutMe/AboutMe';
-import Resume from '../PortfolioContainer/Resume/Resume';
-import ContactMe from '../PortfolioContainer/ContactMe/ContactMe';
-import Projects from '../PortfolioContainer/Projects/Projects';
+import Home from '../PortfolioContainer/Home/Home.tsx';
+import AboutMe from '../PortfolioContainer/AboutMe/AboutMe.tsx';
+import Resume from '../PortfolioContainer/Resume/Resume.tsx';
+import ContactMe from '../PortfolioContainer/ContactMe/ContactMe.tsx';
+import Projects from '../PortfolioContainer/Projects/Projects.tsx';
 
 export const TOTAL_SCREENS = [
     {
