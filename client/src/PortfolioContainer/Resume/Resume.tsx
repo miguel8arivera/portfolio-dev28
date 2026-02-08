@@ -175,7 +175,7 @@ const Resume = (props) => {
     </div>,
 
     /* PROJECTS */
-    <div className="resume-screen-container" key="projects">
+    <div className="resume-screen-container scrollable" key="projects">
       {projectsDetails.map((project, index) => (
         <ResumeHeading
           key={index}
