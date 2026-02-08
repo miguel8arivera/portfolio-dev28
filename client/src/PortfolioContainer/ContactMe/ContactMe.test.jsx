@@ -47,10 +47,10 @@ describe('ContactMe Component', () => {
   });
 
   test('shows error when submitting empty form', async () => {
-    render(<ContactMe id="contact" />);
+    const { container } = render(<ContactMe id="contact" />);
 
-    const submitButton = screen.getByRole('button', { name: /send/i });
-    fireEvent.click(submitButton);
+    const form = container.querySelector('form');
+    fireEvent.submit(form);
 
     await waitFor(() => {
       expect(toast.error).toHaveBeenCalledWith('Please fill all the fields');
@@ -59,15 +59,16 @@ describe('ContactMe Component', () => {
   });
 
   test('shows error when name is empty', async () => {
-    render(<ContactMe id="contact" />);
+    const { container } = render(<ContactMe id="contact" />);
 
     const emailInput = screen.getByLabelText(/email/i);
     const messageInput = screen.getByLabelText(/message/i);
-    const submitButton = screen.getByRole('button', { name: /send/i });
 
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
     fireEvent.change(messageInput, { target: { value: 'Test message' } });
-    fireEvent.click(submitButton);
+
+    const form = container.querySelector('form');
+    fireEvent.submit(form);
 
     await waitFor(() => {
       expect(toast.error).toHaveBeenCalledWith('Please fill all the fields');
@@ -76,15 +77,16 @@ describe('ContactMe Component', () => {
   });
 
   test('shows error when email is empty', async () => {
-    render(<ContactMe id="contact" />);
+    const { container } = render(<ContactMe id="contact" />);
 
     const nameInput = screen.getByLabelText(/name/i);
     const messageInput = screen.getByLabelText(/message/i);
-    const submitButton = screen.getByRole('button', { name: /send/i });
 
     fireEvent.change(nameInput, { target: { value: 'John Doe' } });
     fireEvent.change(messageInput, { target: { value: 'Test message' } });
-    fireEvent.click(submitButton);
+
+    const form = container.querySelector('form');
+    fireEvent.submit(form);
 
     await waitFor(() => {
       expect(toast.error).toHaveBeenCalledWith('Please fill all the fields');
@@ -93,15 +95,16 @@ describe('ContactMe Component', () => {
   });
 
   test('shows error when message is empty', async () => {
-    render(<ContactMe id="contact" />);
+    const { container } = render(<ContactMe id="contact" />);
 
     const nameInput = screen.getByLabelText(/name/i);
     const emailInput = screen.getByLabelText(/email/i);
-    const submitButton = screen.getByRole('button', { name: /send/i });
 
     fireEvent.change(nameInput, { target: { value: 'John Doe' } });
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-    fireEvent.click(submitButton);
+
+    const form = container.querySelector('form');
+    fireEvent.submit(form);
 
     await waitFor(() => {
       expect(toast.error).toHaveBeenCalledWith('Please fill all the fields');
@@ -116,19 +119,20 @@ describe('ContactMe Component', () => {
     };
     axios.post.mockResolvedValue(mockResponse);
 
-    render(<ContactMe id="contact" />);
+    const { container } = render(<ContactMe id="contact" />);
 
     const nameInput = screen.getByLabelText(/name/i);
     const emailInput = screen.getByLabelText(/email/i);
     const messageInput = screen.getByLabelText(/message/i);
-    const submitButton = screen.getByRole('button', { name: /send/i });
 
     fireEvent.change(nameInput, { target: { value: 'John Doe' } });
     fireEvent.change(emailInput, { target: { value: 'john@example.com' } });
     fireEvent.change(messageInput, {
       target: { value: 'Hello, this is a test message!' },
     });
-    fireEvent.click(submitButton);
+
+    const form = container.querySelector('form');
+    fireEvent.submit(form);
 
     await waitFor(() => {
       expect(axios.post).toHaveBeenCalledWith('/contact', {
@@ -152,23 +156,24 @@ describe('ContactMe Component', () => {
 
   test('handles API error gracefully', async () => {
     // Mock console.error to avoid noise in test output
-    const consoleErrorSpy = jest
+    const consoleErrorSpy = vi
       .spyOn(console, 'error')
       .mockImplementation(() => {});
 
     axios.post.mockRejectedValue(new Error('Network error'));
 
-    render(<ContactMe id="contact" />);
+    const { container } = render(<ContactMe id="contact" />);
 
     const nameInput = screen.getByLabelText(/name/i);
     const emailInput = screen.getByLabelText(/email/i);
     const messageInput = screen.getByLabelText(/message/i);
-    const submitButton = screen.getByRole('button', { name: /send/i });
 
     fireEvent.change(nameInput, { target: { value: 'John Doe' } });
     fireEvent.change(emailInput, { target: { value: 'john@example.com' } });
     fireEvent.change(messageInput, { target: { value: 'Test message' } });
-    fireEvent.click(submitButton);
+
+    const form = container.querySelector('form');
+    fireEvent.submit(form);
 
     await waitFor(() => {
       expect(toast.error).toHaveBeenCalledWith(
@@ -187,18 +192,19 @@ describe('ContactMe Component', () => {
   });
 
   test('trims whitespace from inputs during validation', async () => {
-    render(<ContactMe id="contact" />);
+    const { container } = render(<ContactMe id="contact" />);
 
     const nameInput = screen.getByLabelText(/name/i);
     const emailInput = screen.getByLabelText(/email/i);
     const messageInput = screen.getByLabelText(/message/i);
-    const submitButton = screen.getByRole('button', { name: /send/i });
 
     // Enter only whitespace
     fireEvent.change(nameInput, { target: { value: '   ' } });
     fireEvent.change(emailInput, { target: { value: '   ' } });
     fireEvent.change(messageInput, { target: { value: '   ' } });
-    fireEvent.click(submitButton);
+
+    const form = container.querySelector('form');
+    fireEvent.submit(form);
 
     await waitFor(() => {
       expect(toast.error).toHaveBeenCalledWith('Please fill all the fields');

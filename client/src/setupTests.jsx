@@ -45,6 +45,15 @@ vi.mock('react-owl-carousel', () => {
   };
 });
 
+// Mock react-slick
+vi.mock('react-slick', () => {
+  return {
+    default: ({ children }) => {
+      return <div data-testid="slider">{children}</div>;
+    }
+  };
+});
+
 // Mock useTranslation hook
 vi.mock('./hooks/useTranslation', () => ({
   useTranslation: () => ({
@@ -101,13 +110,19 @@ vi.mock('./hooks/useTranslation', () => ({
         emailLabel: 'Email',
         messageLabel: 'Message',
         sendButton: 'Send',
+        validation: {
+          fillAllFields: 'Please fill all the fields',
+          invalidEmail: 'Please enter a valid email address',
+          invalidName: 'Please enter a valid name (letters only)',
+          securityError: 'Invalid input detected. Please remove special characters.',
+        },
         toast: {
           success: 'Thank you for contacting Miguel!',
           error: 'Failed to send message. Please try again.',
           invalidEmail: 'Please enter a valid email address',
           invalidName: 'Please enter a valid name (letters only)',
-          fillAll: 'Please fill all the fields',
-          malicious: 'Invalid input detected. Please remove special characters.',
+          fillFields: 'Please fill all the fields',
+          securityError: 'Invalid input detected. Please remove special characters.',
         },
       },
     },

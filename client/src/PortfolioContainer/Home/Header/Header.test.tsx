@@ -49,10 +49,10 @@ describe('Header Component', () => {
     render(<Header />);
 
     expect(screen.getByText('Home')).toBeInTheDocument();
-    expect(screen.getByText('AboutMe')).toBeInTheDocument();
+    expect(screen.getByText('About Me')).toBeInTheDocument();
     expect(screen.getByText('Resume')).toBeInTheDocument();
     expect(screen.getByText('Projects')).toBeInTheDocument();
-    expect(screen.getByText('ContactMe')).toBeInTheDocument();
+    expect(screen.getByText('Contact Me')).toBeInTheDocument();
   });
 
   test('renders hamburger menu icon', () => {
@@ -155,7 +155,6 @@ describe('Header Component', () => {
 
   test('component cleans up subscription on unmount', () => {
     const unsubscribeMock = vi.fn();
-    const ScrollService = require('../../../utilities/ScrollService');
     ScrollService.currentScreenBroadcaster.subscribe.mockImplementation(() => ({
       unsubscribe: unsubscribeMock,
     }));

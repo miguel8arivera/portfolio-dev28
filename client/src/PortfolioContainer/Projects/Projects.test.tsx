@@ -34,19 +34,19 @@ describe('Projects Component', () => {
     expect(screen.getByText('My Creative Works')).toBeInTheDocument();
   });
 
-  test('renders owl carousel', () => {
+  test('renders slider carousel', () => {
     render(<Projects id="projects" />);
 
-    const carousel = screen.getByTestId('owl-carousel');
-    expect(carousel).toBeInTheDocument();
+    const slider = screen.getByTestId('slider');
+    expect(slider).toBeInTheDocument();
   });
 
   test('displays all project cards', () => {
     render(<Projects id="projects" />);
 
-    // Check for project titles
-    expect(screen.getByText('E-commerce-app')).toBeInTheDocument();
-    expect(screen.getAllByText('Portfolio-web').length).toBeGreaterThan(0);
+    // Check that project content is rendered (descriptions are visible)
+    expect(screen.getAllByText(/Construction of an E-commerce/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Creation of a web portfolio/i).length).toBeGreaterThan(0);
   });
 
   test('displays project descriptions', () => {
