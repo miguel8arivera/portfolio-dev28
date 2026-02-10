@@ -52,6 +52,19 @@ if (process.env.NODE_ENV === 'production') {
 // API routes
 app.use('/', contactRouter);
 
+// Root endpoint - API info
+app.get('/', (_req: Request, res: Response) => {
+  res.status(200).json({
+    status: 'ok',
+    message: 'Portfolio API Server',
+    version: '1.0.0',
+    endpoints: {
+      health: 'GET /health',
+      contact: 'POST /contact',
+    },
+  });
+});
+
 // Health check endpoint
 app.get('/health', (_req: Request, res: Response) => {
   res.status(200).json({
@@ -72,11 +85,19 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+// Handle unsupported methods on /contact
+app.all('/contact', (req: Request, res: Response) => {
+  res.status(405).json({
+    status: 'error',
+    message: `Method ${req.method} not allowed on /contact. Use POST instead.`,
+  });
+});
+
 // 404 handler - must be after all routes
-app.use((_req: Request, res: Response) => {
+app.use((req: Request, res: Response) => {
   res.status(404).json({
     status: 'error',
-    message: 'Route not found',
+    message: `Route ${req.method} ${req.path} not found`,
   });
 });
 
