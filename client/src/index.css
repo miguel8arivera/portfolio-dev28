@@ -95,6 +95,7 @@
 
 body {
   margin: 0;
+  overflow-x: hidden;
   overflow-y: overlay;
   font-family: "Montserrat Medium";
   -webkit-font-smoothing: antialiased;

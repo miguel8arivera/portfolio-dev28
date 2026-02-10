@@ -1,210 +1,210 @@
-/* Container utilities */
-.container {
+.project-section {
+  padding: 60px 24px;
+  background-image: url("../../../src/assets/Projects/bg-21.png");
+  background-position: center;
+  background-attachment: fixed;
+  background-color: var(--bg-secondary);
+  position: relative;
+  z-index: auto;
+  margin: 0;
+  overflow: hidden;
+}
+.project-section::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.95;
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+}
+
+.project-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.footer-image {
+  width: 100%;
+  height: 100%;
+  max-width: 1920px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  margin-top: -110px;
+}
+.footer-image img {
+  max-width: 100%;
+  height: 130px;
+}
+
+.project-section .project-item {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  padding: 30px;
+  border-radius: 50px 50px 50px 0px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 6px var(--shadow-color);
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.project-section .project-item p {
+  font-size: 16px;
+  line-height: 26px;
+  font-weight: 400;
+  margin: 0 0 10px;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+.project-section .project-item p .fa-quote-left {
+  margin-right: 5px;
+  color: tomato;
+}
+.project-section .project-item p .fa-quote-right {
+  margin-left: 5px;
+  color: tomato;
+}
+
+.project-section .project-comment .stars {
+  margin: 0 0 20px;
+}
+.project-section .project-comment .stars li {
+  display: inline-block;
+  margin: 0 1px;
+}
+.project-section .project-comment .stars li i {
+  font-size: 13px;
+  color: tomato;
+}
+.project-section .project-info {
+  position: relative;
+  padding-left: 80px;
+  padding-top: 5px;
+  min-height: 60px;
+}
+.project-section .project-info img {
+  height: 70px;
+  width: 70px;
+  border: 2px solid transparent;
+  border-color: var(--text-dark);
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  position: absolute;
+}
+.project-section .project-info h5 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 26px;
+  margin: 0 0 2px;
+  color: var(--text-primary);
+}
+.project-section .project-info p {
+  font-size: 16px;
+  line-height: 26px;
+  font-weight: 400;
+  margin: 0;
+  color: var(--text-tertiary);
+}
+
+/* React Slick Customization */
+.project-section .slick-slider {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.project-section .slick-list {
+  overflow: hidden;
+}
+
+.project-section .slick-track {
+  display: flex;
+  align-items: center;
+}
+
+.project-section .slick-slide {
   padding: 0 15px;
 }
 
-.row {
+.project-section .slick-slide > div {
   display: flex;
-  flex-wrap: wrap;
-  margin: 0 -15px;
+  justify-content: center;
 }
 
-.project-section {
-    padding: 60px 0;
-    background-image: url("../../../src/assets/Projects/bg-21.png");
-    background-position: center;
-    background-attachment: fixed;
-    background-color: var(--bg-secondary);
-    position: relative;
-    z-index: auto;
-    margin: 0;
-  }
-  .project-section::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    opacity: 0.95;
-    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-  }
+.project-section .slick-dots {
+  bottom: -50px;
+}
 
-  .project-section > * {
-    position: relative;
-    z-index: 1;
-  }
+.project-section .slick-dots li button:before {
+  font-size: 12px;
+  color: var(--accent-blue);
+  opacity: 0.5;
+}
 
-  .footer-image {
-    width: 100%;
-    height: 100%;
-    max-width: 1920px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    margin-top: -110px;
-  }
-  .footer-image img {
-    max-width: 100%;
-    height: 130px;
-  }
+.project-section .slick-dots li.slick-active button:before {
+  opacity: 1;
+  color: var(--accent-blue);
+}
 
-  .project-section .project-item {
-    background-color: var(--bg-card);
-    color: var(--text-primary);
-    padding: 30px;
-    border-radius: 50px 50px 50px 0px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 6px var(--shadow-color);
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  .project-section .project-item p {
-    font-size: 16px;
-    line-height: 26px;
-    font-weight: 400;
-    margin: 0 0 10px;
-    font-style: italic;
-    color: var(--text-secondary);
-  }
-  .project-section .project-item p .fa-quote-left {
-    margin-right: 5px;
-    color: tomato;
-  }
-  .project-section .project-item p .fa-quote-right {
-    margin-left: 5px;
-    color: tomato;
-  }
-  
-  .project-section .project-comment .stars {
-    margin: 0 0 20px;
-  }
-  .project-section .project-comment .stars li {
-    display: inline-block;
-    margin: 0 1px;
-  }
-  .project-section .project-comment .stars li i {
-    font-size: 13px;
-    color: tomato;
-  }
-  .project-section .project-info {
-    position: relative;
-    padding-left: 80px;
-    padding-top: 5px;
-    min-height: 60px;
-  }
-  .project-section .project-info img {
-    height: 70px;
-    width: 70px;
-    border: 2px solid transparent;
-    border-color: var(--text-dark);
-    left: 0;
-    top: 0;
-    border-radius: 50%;
-    position: absolute;
-  }
-  .project-section .project-info h5 {
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 26px;
-    margin: 0 0 2px;
-    color: var(--text-primary);
-  }
-  .project-section .project-info p {
-    font-size: 16px;
-    line-height: 26px;
-    font-weight: 400;
-    margin: 0;
-    color: var(--text-tertiary);
-  }
+.project-section .slick-prev,
+.project-section .slick-next {
+  width: 45px;
+  height: 45px;
+  z-index: 10;
+}
 
-  /* React Slick Customization */
-  .project-section .slick-slider {
-    margin: 0 40px;
-    width: 100%;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+.project-section .slick-prev {
+  left: -15px;
+}
 
-  .project-section .slick-list {
-    overflow: hidden;
-  }
+.project-section .slick-next {
+  right: -15px;
+}
 
-  .project-section .slick-track {
-    display: flex;
-    align-items: center;
-  }
+.project-section .slick-prev:before,
+.project-section .slick-next:before {
+  font-size: 45px;
+  color: var(--accent-blue);
+  opacity: 0.75;
+}
 
+.project-section .slick-prev:hover:before,
+.project-section .slick-next:hover:before {
+  opacity: 1;
+}
+
+@media only screen and (max-width: 970px) {
   .project-section .slick-slide {
-    padding: 0 15px;
-  }
-
-  .project-section .slick-slide > div {
-    display: flex;
-    justify-content: center;
-  }
-
-  .project-section .slick-dots {
-    bottom: -50px;
-  }
-
-  .project-section .slick-dots li button:before {
-    font-size: 12px;
-    color: var(--accent-blue);
-    opacity: 0.5;
-  }
-
-  .project-section .slick-dots li.slick-active button:before {
-    opacity: 1;
-    color: var(--accent-blue);
+    padding: 0 8px;
   }
 
   .project-section .slick-prev,
   .project-section .slick-next {
-    width: 45px;
-    height: 45px;
-    z-index: 10;
-  }
-
-  .project-section .slick-prev {
-    left: -15px;
-  }
-
-  .project-section .slick-next {
-    right: -15px;
+    width: 30px;
+    height: 30px;
   }
 
   .project-section .slick-prev:before,
   .project-section .slick-next:before {
-    font-size: 45px;
-    color: var(--accent-blue);
-    opacity: 0.75;
+    font-size: 28px;
   }
 
-  .project-section .slick-prev:hover:before,
-  .project-section .slick-next:hover:before {
-    opacity: 1;
+  .project-section .slick-prev {
+    left: -4px;
   }
 
-  @media only screen and (max-width: 768px) {
-    .project-section .slick-slider {
-      margin: 0 20px;
-    }
-
-    .project-section .slick-prev {
-      left: -10px;
-    }
-
-    .project-section .slick-next {
-      right: -10px;
-    }
+  .project-section .slick-next {
+    right: -4px;
   }
-  
+
+  .project-section .project-item {
+    padding: 24px 20px;
+    border-radius: 30px 30px 30px 0px;
+  }
+}

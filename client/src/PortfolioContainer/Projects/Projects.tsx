@@ -61,29 +61,25 @@ export default function Projects(props) {
         subHeading={t.projects.subTitle}
       />
       <section className="project-section fade-in" id={props.id || ""}>
-        <div className="container">
-          <div className="row">
-            <Slider {...sliderSettings} key={language}>
-              {projectsData.map((project) => (
-                <div key={project.id}>
-                  <div className="project-item">
-                    <div className="project-desc">
-                      <p>
-                        <i className="fa fa-quote-left" />
-                        {project.description}
-                        <i className="fa fa-quote-right" />
-                      </p>
-                    </div>
-                    <div className="project-info">
-                      <h5>{project.title}</h5>
-                      <p>{project.technology}</p>
-                    </div>
-                  </div>
+        <Slider {...sliderSettings} key={language}>
+          {projectsData.map((project) => (
+            <div key={project.id}>
+              <div className="project-item">
+                <div className="project-desc">
+                  <p>
+                    <i className="fa fa-quote-left" />
+                    {project.description}
+                    <i className="fa fa-quote-right" />
+                  </p>
                 </div>
-              ))}
-            </Slider>
-          </div>
-        </div>
+                <div className="project-info">
+                  <h5>{project.title}</h5>
+                  <p>{project.technology}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </Slider>
       </section>
     </div>
   );
