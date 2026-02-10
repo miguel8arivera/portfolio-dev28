@@ -174,7 +174,8 @@ export default function Contactme(props) {
         message,
       };
       setBool(true);
-      const res = await axios.post("/contact", data);
+      const apiUrl = import.meta.env.DEV ? "http://localhost:5000/contact" : "/contact";
+      const res = await axios.post(apiUrl, data);
 
       if (res.status === 200) {
         setBanner(res.data.msg);
@@ -188,10 +189,12 @@ export default function Contactme(props) {
         setNameError("");
         setMessageError("");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error sending message:", error);
-      setBanner(t.contact.toast.error);
-      toast.error(t.contact.toast.error);
+      console.error("Server response:", error.response?.data);
+      const serverMessage = error.response?.data?.message || t.contact.toast.error;
+      setBanner(serverMessage);
+      toast.error(serverMessage);
     } finally {
       // Always reset loading state
       setBool(false);
