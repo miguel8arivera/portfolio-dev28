@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 import { ContactRequest, ContactResponse } from '../types/contact.types.js';
 import { validateContactData, sanitizeText } from '../utils/validation.js';
 import { asyncHandler, AppError } from '../middleware/errorHandler.js';
@@ -9,7 +9,7 @@ const router = Router();
 
 /**
  * POST /contact
- * Handle contact form submissions with validation and email sending
+ * Handle contact form submissions with validation and email sending via Resend
  */
 router.post(
   '/contact',
@@ -29,8 +29,8 @@ router.post(
     const sanitizedMessage = sanitizeText(message);
 
     // Verify required environment variables
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-      console.error('Email configuration missing: EMAIL_USER or EMAIL_PASS not set');
+    if (!process.env.RESEND_API_KEY) {
+      console.error('Email configuration missing: RESEND_API_KEY not set');
       throw new AppError('Email service is not configured', 500);
     }
 
@@ -39,101 +39,69 @@ router.post(
       throw new AppError('Email service is not configured', 500);
     }
 
-    // Create email transporter
-    const smtpTransporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
-    // Verify transporter configuration
+    // Send email via Resend (HTTPS API - works on all hosting providers)
     try {
-      await smtpTransporter.verify();
-      console.log('SMTP verification successful');
-    } catch (error: any) {
-      console.error('SMTP verification failed:', error.message);
-      console.error('SMTP error code:', error.code);
-      console.error('EMAIL_USER configured:', !!process.env.EMAIL_USER);
-      console.error('EMAIL_PASS configured:', !!process.env.EMAIL_PASS);
-      console.error('EMAIL_PASS length:', process.env.EMAIL_PASS?.length);
-      throw new AppError('Email service is temporarily unavailable', 500);
-    }
-
-    // Prepare email options
-    const mailOptions = {
-      from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_RECIPIENT,
-      replyTo: sanitizedEmail,
-      subject: `Portfolio Contact: Message from ${sanitizedName}`,
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background-color: #007bff; color: white; padding: 20px; text-align: center; }
-            .content { background-color: #f9f9f9; padding: 20px; margin: 20px 0; }
-            .info { background-color: white; padding: 15px; margin: 10px 0; border-left: 4px solid #007bff; }
-            .label { font-weight: bold; color: #007bff; }
-            .footer { text-align: center; color: #666; font-size: 12px; margin-top: 20px; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h2>New Contact Form Submission</h2>
-            </div>
-            <div class="content">
-              <div class="info">
-                <p><span class="label">Name:</span> ${sanitizedName}</p>
+      const { data, error } = await resend.emails.send({
+        from: 'Portfolio Contact <onboarding@resend.dev>',
+        to: [process.env.EMAIL_RECIPIENT],
+        replyTo: sanitizedEmail,
+        subject: `Portfolio Contact: Message from ${sanitizedName}`,
+        html: `
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <style>
+              body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+              .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+              .header { background-color: #007bff; color: white; padding: 20px; text-align: center; }
+              .content { background-color: #f9f9f9; padding: 20px; margin: 20px 0; }
+              .info { background-color: white; padding: 15px; margin: 10px 0; border-left: 4px solid #007bff; }
+              .label { font-weight: bold; color: #007bff; }
+              .footer { text-align: center; color: #666; font-size: 12px; margin-top: 20px; }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="header">
+                <h2>New Contact Form Submission</h2>
               </div>
-              <div class="info">
-                <p><span class="label">Email:</span> ${sanitizedEmail}</p>
+              <div class="content">
+                <div class="info">
+                  <p><span class="label">Name:</span> ${sanitizedName}</p>
+                </div>
+                <div class="info">
+                  <p><span class="label">Email:</span> ${sanitizedEmail}</p>
+                </div>
+                <div class="info">
+                  <p><span class="label">Message:</span></p>
+                  <p>${sanitizedMessage.replace(/\n/g, '<br>')}</p>
+                </div>
               </div>
-              <div class="info">
-                <p><span class="label">Message:</span></p>
-                <p>${sanitizedMessage.replace(/\n/g, '<br>')}</p>
+              <div class="footer">
+                <p>This message was sent from your portfolio contact form.</p>
+                <p>Received at: ${new Date().toLocaleString()}</p>
               </div>
             </div>
-            <div class="footer">
-              <p>This message was sent from your portfolio contact form.</p>
-              <p>Received at: ${new Date().toLocaleString()}</p>
-            </div>
-          </div>
-        </body>
-        </html>
-      `,
-      text: `
-New Contact Form Submission
+          </body>
+          </html>
+        `,
+      });
 
-Name: ${sanitizedName}
-Email: ${sanitizedEmail}
+      if (error) {
+        console.error('Resend error:', error);
+        throw new AppError('Failed to send message. Please try again later.', 500);
+      }
 
-Message:
-${sanitizedMessage}
-
----
-Received at: ${new Date().toLocaleString()}
-      `,
-    };
-
-    // Send email
-    try {
-      const info = await smtpTransporter.sendMail(mailOptions);
-      console.log('Email sent successfully:', info.messageId);
+      console.log('Email sent successfully via Resend:', data?.id);
 
       res.status(200).json({
         msg: 'Thank you for contacting Miguel!',
       });
     } catch (error: any) {
+      if (error instanceof AppError) throw error;
       console.error('Failed to send email:', error.message);
-      console.error('Email error code:', error.code);
-      console.error('Email error response:', error.response);
       throw new AppError('Failed to send message. Please try again later.', 500);
     }
   })
