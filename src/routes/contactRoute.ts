@@ -30,14 +30,15 @@ router.post(
 
     // Verify required environment variables
     if (!process.env.RESEND_API_KEY) {
-      console.error('Email configuration missing: RESEND_API_KEY not set');
-      throw new AppError('Email service is not configured', 500);
+      throw new AppError('RESEND_API_KEY not set in .env', 500);
     }
 
     if (!process.env.EMAIL_RECIPIENT) {
-      console.error('Email configuration missing: EMAIL_RECIPIENT not set');
-      throw new AppError('Email service is not configured', 500);
+      throw new AppError('EMAIL_RECIPIENT not set in .env', 500);
     }
+
+    console.log('Resend config OK - API key starts with:', process.env.RESEND_API_KEY.substring(0, 6));
+    console.log('Sending to:', process.env.EMAIL_RECIPIENT);
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -90,8 +91,8 @@ router.post(
       });
 
       if (error) {
-        console.error('Resend error:', error);
-        throw new AppError('Failed to send message. Please try again later.', 500);
+        console.error('Resend error:', JSON.stringify(error));
+        throw new AppError(`Resend error: ${error.message || JSON.stringify(error)}`, 500);
       }
 
       console.log('Email sent successfully via Resend:', data?.id);
@@ -102,7 +103,7 @@ router.post(
     } catch (error: any) {
       if (error instanceof AppError) throw error;
       console.error('Failed to send email:', error.message);
-      throw new AppError('Failed to send message. Please try again later.', 500);
+      throw new AppError(`Email send failed: ${error.message}`, 500);
     }
   })
 );
