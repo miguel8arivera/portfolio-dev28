@@ -5,7 +5,7 @@
   "type": "module",
   "main": "dist/server.js",
   "scripts": {
-    "build": "tsc && npm install --prefix client && npm run build --prefix client",
+    "build": "echo '=== tsc version ===' && npx tsc --version && echo '=== Running tsc ===' && tsc && echo '=== tsc OK, checking dist ===' && ls -la dist/ && echo '=== Installing client deps ===' && npm install --prefix client && echo '=== Building client ===' && npm run build --prefix client && echo '=== BUILD COMPLETE ==='",
     "server": "tsx watch src/server.ts",
     "server:prod": "node dist/server.js",
     "client": "npm run dev --prefix client",
