@@ -52,8 +52,17 @@ if (process.env.NODE_ENV === 'production') {
 // API routes
 app.use('/', contactRouter);
 
-// Root endpoint - API info
-app.get('/', (_req: Request, res: Response) => {
+// Health check endpoint
+app.get('/health', (_req: Request, res: Response) => {
+  res.status(200).json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+  });
+});
+
+// API info endpoint
+app.get('/api', (_req: Request, res: Response) => {
   res.status(200).json({
     status: 'ok',
     message: 'Portfolio API Server',
@@ -62,15 +71,6 @@ app.get('/', (_req: Request, res: Response) => {
       health: 'GET /health',
       contact: 'POST /contact',
     },
-  });
-});
-
-// Health check endpoint
-app.get('/health', (_req: Request, res: Response) => {
-  res.status(200).json({
-    status: 'ok',
-    timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
   });
 });
 
