@@ -4,7 +4,7 @@ import {
   GET_SCREEN_INDEX,
 } from "../../../utilities/commonUtils";
 import ScrollService from "../../../utilities/ScrollService";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { headerLogo } from "../../../data/headerData";
 import ThemeToggle from "../../../components/ThemeToggle/ThemeToggle";
@@ -46,6 +46,17 @@ export default function Header() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (showHeaderOptions) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showHeaderOptions]);
+
   const getHeaderOptions = () => {
     return TOTAL_SCREENS.map((Screen, i) => (
       <div
@@ -77,21 +88,18 @@ export default function Header() {
   };
 
   return (
-    <div>
-      <div
-        className="header-container "
-        onClick={() => setShowHeaderOptions(!showHeaderOptions)}
-      >
-        <div className="header-parent ">
+    <div className={showHeaderOptions ? "header-root header-menu-open" : "header-root"}>
+      <div className="header-container">
+        <div className="header-parent">
           <div
             className="header-hamburger"
             onClick={() => setShowHeaderOptions(!showHeaderOptions)}
           >
-            <FontAwesomeIcon className="header-hamburger-bars " icon={faBars} />
+            <FontAwesomeIcon className="header-hamburger-bars" icon={faBars} />
           </div>
-          <div className="header-logo ">
-            <span className="first-title ">{headerLogo.text} </span>
-            <span className="second-title ">{headerLogo.emoji}</span>
+          <div className="header-logo">
+            <span className="first-title">{headerLogo.text} </span>
+            <span className="second-title">{headerLogo.emoji}</span>
           </div>
           <ThemeToggle />
           <div
@@ -101,11 +109,23 @@ export default function Header() {
                 : "header-options"
             }
           >
+            <div
+              className="header-menu-close"
+              onClick={() => setShowHeaderOptions(false)}
+            >
+              <FontAwesomeIcon icon={faTimes} />
+            </div>
             {getHeaderOptions()}
             <LanguageToggle />
           </div>
         </div>
       </div>
+      {showHeaderOptions && (
+        <div
+          className="header-backdrop"
+          onClick={() => setShowHeaderOptions(false)}
+        />
+      )}
     </div>
   );
 }

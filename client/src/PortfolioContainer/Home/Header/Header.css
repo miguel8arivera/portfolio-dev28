@@ -44,13 +44,38 @@
   color: var(--accent-blue);
 }
 
+/* Close button & backdrop - hidden on desktop */
+.header-menu-close {
+  display: none;
+}
+.header-backdrop {
+  display: none;
+}
+
+/* Theme Toggle Positioning - desktop */
+.header-parent .theme-toggle {
+  margin-left: 20px;
+}
+
+/* Language Toggle Positioning - desktop */
+.header-options .language-toggle {
+  margin-left: 16px;
+}
+
 /*IPAD PRO RESPONSIVENESS*/
 @media only screen and (max-width: 1110px) {
-  header-parent {
+  .header-parent {
     width: 80%;
   }
 }
+
+/* ========== MOBILE ========== */
 @media only screen and (max-width: 970px) {
+  /* Raise header stacking context above Profile/Footer when menu is open */
+  .header-menu-open {
+    z-index: 9999 !important;
+  }
+
   .header-hamburger {
     display: block;
   }
@@ -59,60 +84,84 @@
     padding: 0 40px;
     position: relative;
   }
-  .header-options {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    left: -100%;
-    transition: all 0.8s ease-out;
-    top: 0px;
-    height: 100vh;
-    width: 100%;
-    justify-content: space-around;
-    background-color: var(--bg-card);
-    z-index: 1000;
-    opacity: 0.5;
+
+  /* Theme toggle - in header bar, natural flex flow */
+  .header-parent .theme-toggle {
+    margin-left: auto;
+    margin-right: 16px;
   }
-  .header-option-seperator {
-    margin: 0;
-  }
-  .selected-header-option {
-    color: var(--text-primary);
-  }
+
   .header-hamburger-bars {
     font-size: 36px;
     cursor: pointer;
     margin: 0px 10px;
     color: var(--text-primary);
   }
-  .show-hamburger-options {
+
+  /* ---- Fullscreen menu overlay ---- */
+  .header-options {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
     left: 0;
-    opacity: 1;
+    height: 100vh;
+    height: 100dvh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 28px;
+    background-color: var(--bg-primary);
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-out;
   }
-}
+  .show-hamburger-options {
+    transform: translateX(0);
+  }
 
-/* Theme Toggle Positioning */
-.header-parent .theme-toggle {
-  margin-left: 20px;
-}
+  /* Menu items - large touch targets */
+  .header-option {
+    font-size: 22px;
+    padding: 14px 32px;
+  }
+  .header-option-seperator {
+    margin: 0;
+  }
+  .selected-header-option {
+    color: var(--accent-blue);
+  }
 
-/* Language Toggle Positioning - in header-options */
-.header-options .language-toggle {
-  margin-left: 16px;
-}
-
-/* Mobile: Toggle a la izquierda del hamburger */
-@media only screen and (max-width: 970px) {
-  .header-parent .theme-toggle {
+  /* Close button (X) */
+  .header-menu-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
-    right: 80px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    font-size: 30px;
+    cursor: pointer;
+    color: var(--text-primary);
     z-index: 1001;
   }
 
-  /* Language toggle in mobile menu */
+  /* Backdrop behind menu */
+  .header-backdrop {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+
+  /* Language toggle inside menu */
   .header-options .language-toggle {
-    margin: 20px 0;
+    margin: 0;
   }
 }

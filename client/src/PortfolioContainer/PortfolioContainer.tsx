@@ -1,5 +1,7 @@
 import React from 'react';
 import {TOTAL_SCREENS} from '../utilities/commonUtils';
+import ScrollService from '../utilities/ScrollService';
+import '../PortfolioContainer/Home/Footer/Footer.css';
 
 export default function PortfolioContainer() {
 
@@ -14,6 +16,14 @@ export default function PortfolioContainer() {
     return (
         <div className='portfolio-container'>
             {mapAllScreens()}
+            <div className="scroll-container">
+                <button
+                    className="btn-scroll"
+                    onClick={() => ScrollService.scrollHandler.scrollToHome()}
+                >
+                    <i className="fa fa-arrow-up"></i>
+                </button>
+            </div>
         </div>
     )
 }
