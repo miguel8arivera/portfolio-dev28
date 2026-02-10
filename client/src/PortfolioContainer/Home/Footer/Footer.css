@@ -30,9 +30,8 @@
 .scroll-container {
   position: fixed;
   text-align: center;
-  right: 9px;
+  right: 16px;
   bottom: 20px;
-  overflow: hidden;
   flex-direction: column;
   z-index: 1000;
   cursor: pointer;
