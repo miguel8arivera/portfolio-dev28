@@ -41,7 +41,7 @@ router.post(
 
     // Create email transporter
     const smtpTransporter = nodemailer.createTransport({
-      service: 'Gmail',
+      host: 'smtp.gmail.com',
       port: 465,
       secure: true,
       auth: {
@@ -53,8 +53,13 @@ router.post(
     // Verify transporter configuration
     try {
       await smtpTransporter.verify();
-    } catch (error) {
-      console.error('SMTP verification failed:', error);
+      console.log('SMTP verification successful');
+    } catch (error: any) {
+      console.error('SMTP verification failed:', error.message);
+      console.error('SMTP error code:', error.code);
+      console.error('EMAIL_USER configured:', !!process.env.EMAIL_USER);
+      console.error('EMAIL_PASS configured:', !!process.env.EMAIL_PASS);
+      console.error('EMAIL_PASS length:', process.env.EMAIL_PASS?.length);
       throw new AppError('Email service is temporarily unavailable', 500);
     }
 
@@ -125,8 +130,10 @@ Received at: ${new Date().toLocaleString()}
       res.status(200).json({
         msg: 'Thank you for contacting Miguel!',
       });
-    } catch (error) {
-      console.error('Failed to send email:', error);
+    } catch (error: any) {
+      console.error('Failed to send email:', error.message);
+      console.error('Email error code:', error.code);
+      console.error('Email error response:', error.response);
       throw new AppError('Failed to send message. Please try again later.', 500);
     }
   })
